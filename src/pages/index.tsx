@@ -1,118 +1,142 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-
-const inter = Inter({ subsets: ['latin'] })
+import { useState, useEffect } from 'react'
 
 export default function Home() {
-  return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
-    >
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/pages/index.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+    const [pdfLink, setPdfLink] = useState<string>('')
+    const [selectedSubject, setSelectedSubject] = useState<string>('')
+    const [selectedYear, setSelectedYear] = useState<string>('')
+    const [selectedSeason, setSelectedSeason] = useState<string>('')
+    const [selectedLevel, setSelectedLevel] = useState<string>('')
+    const [selectedType, setSelectedType] = useState<string>('')
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700/10 after:dark:from-sky-900 after:dark:via-[#0141ff]/40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+    const subjects = [
+        { value: 'k_magyir', label: 'Magyar' },
+        { value: 'k_mat', label: 'Matek' },
+        { value: 'k_tort', label: 'Történelem' },
+        { value: 'k_angol', label: 'Angol' },
+        { value: 'k_nemet', label: 'Német' },
+        { value: 'k_inf', label: 'Közismereti Informatika' },
+        { value: 'k_infoism', label: 'Szakmai Informatika' },
+    ]
 
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
+    const [years, setYears] = useState<string[]>([])
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
+    useEffect(() => {
+        const currentYear = new Date().getFullYear()
+        const availableYears: string[] = []
+        for (let year = currentYear; year >= 2005; year--) {
+            availableYears.push(year.toString())
+        }
+        setYears(availableYears)
+    }, [])
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Discover and deploy boilerplate example Next.js&nbsp;projects.
-          </p>
-        </a>
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch(
+                    `/api/erettsegi?vizsgatargy=${selectedSubject}&ev=${selectedYear}&evszak=${selectedSeason}&szint=${selectedLevel}&tipus=${selectedType}`
+                )
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+                if (response.ok) {
+                    const data = await response.json()
+                    if (data.pdfUrl) {
+                        setPdfLink(data.pdfUrl)
+                    } else {
+                        console.error('Nincs érvényes PDF link a válaszban.')
+                    }
+                } else {
+                    console.error('Hiba történt az API hívás során.')
+                }
+            } catch (error) {
+                console.error('Hiba történt az API hívás során.', error)
+            }
+        }
+        fetchData()
+    }, [
+        selectedSubject,
+        selectedYear,
+        selectedSeason,
+        selectedLevel,
+        selectedType,
+    ])
+
+    return (
+        <main className="flex min-h-screen flex-col items-center justify-between p-24">
+            <div className="container mx-auto mt-15">
+                <div className="flex flex-col items-center justify-center">
+                    <div className="mb-3">
+                        <select
+                            value={selectedSubject}
+                            onChange={(e) => setSelectedSubject(e.target.value)}
+                            className="w-56 max-w-lg h-10 px-4 text-sm bg-white border border-gray-300 rounded-lg focus:outline-none"
+                        >
+                            <option value="">Tantárgy</option>
+                            {subjects.map((subject) => (
+                                <option
+                                    key={subject.value}
+                                    value={subject.value}
+                                >
+                                    {subject.label}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="mb-3">
+                        <select
+                            value={selectedYear}
+                            onChange={(e) => setSelectedYear(e.target.value)}
+                            className="w-56 max-w-lg h-10 px-4 text-sm bg-white border border-gray-300 rounded-lg focus:outline-none"
+                        >
+                            <option value="">Év</option>
+                            {years.map((year) => (
+                                <option key={year} value={year}>
+                                    {year}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="mb-3">
+                        <select
+                            value={selectedSeason}
+                            onChange={(e) => setSelectedSeason(e.target.value)}
+                            className="w-56 max-w-lg h-10 px-4 text-sm bg-white border border-gray-300 rounded-lg focus:outline-none"
+                        >
+                            <option value="">Évszak</option>
+                            <option value="osz">Ősz</option>
+                            <option value="tavasz">Tavasz</option>
+                        </select>
+                    </div>
+                    <div className="mb-3">
+                        <select
+                            value={selectedLevel}
+                            onChange={(e) => setSelectedLevel(e.target.value)}
+                            className="w-56 max-w-lg h-10 px-4 text-sm bg-white border border-gray-300 rounded-lg focus:outline-none"
+                        >
+                            <option value="">Szint</option>
+                            <option value="kozep">Közép</option>
+                            <option value="emelt">Emelt</option>
+                        </select>
+                    </div>
+                    <div className="mb-3">
+                        <select
+                            value={selectedType}
+                            onChange={(e) => setSelectedType(e.target.value)}
+                            className="w-56 max-w-lg h-10 px-4 text-sm bg-white border border-gray-300 rounded-lg focus:outline-none"
+                        >
+                            <option value="">Típus</option>
+                            <option value="fl">Feladatlap</option>
+                            <option value="ut">Útmutató</option>
+                        </select>
+                    </div>
+                    <button
+                        className="mt-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                        onClick={
+                            pdfLink ? () => window.open(pdfLink) : () => {}
+                        }
+                    >
+                        Megnyitás
+                    </button>
+                </div>
+            </div>
+        </main>
+    )
 }
