@@ -67,7 +67,7 @@ export default function Home() {
                         <select
                             value={selectedSubject}
                             onChange={(e) => setSelectedSubject(e.target.value)}
-                            className="w-56 max-w-lg h-10 px-4 text-sm bg-white border border-gray-300 rounded-lg focus:outline-none"
+                            className="bg-[#181a1b] text-[#efefef] w-56 max-w-lg h-10 px-4 text-sm border border-[#3C4143] rounded-lg focus:outline-none"
                         >
                             <option value="">Tantárgy</option>
                             {subjects.map((subject) => (
@@ -84,7 +84,7 @@ export default function Home() {
                         <select
                             value={selectedYear}
                             onChange={(e) => setSelectedYear(e.target.value)}
-                            className="w-56 max-w-lg h-10 px-4 text-sm bg-white border border-gray-300 rounded-lg focus:outline-none"
+                            className="bg-[#181a1b] text-[#efefef] w-56 max-w-lg h-10 px-4 text-sm border border-[#3C4143] rounded-lg focus:outline-none"
                         >
                             <option value="">Év</option>
                             {years.map((year) => (
@@ -98,7 +98,7 @@ export default function Home() {
                         <select
                             value={selectedSeason}
                             onChange={(e) => setSelectedSeason(e.target.value)}
-                            className="w-56 max-w-lg h-10 px-4 text-sm bg-white border border-gray-300 rounded-lg focus:outline-none"
+                            className="bg-[#181a1b] text-[#efefef] w-56 max-w-lg h-10 px-4 text-sm border border-[#3C4143] rounded-lg focus:outline-none"
                         >
                             <option value="">Évszak</option>
                             <option value="osz">Ősz</option>
@@ -109,7 +109,7 @@ export default function Home() {
                         <select
                             value={selectedLevel}
                             onChange={(e) => setSelectedLevel(e.target.value)}
-                            className="w-56 max-w-lg h-10 px-4 text-sm bg-white border border-gray-300 rounded-lg focus:outline-none"
+                            className="bg-[#181a1b] text-[#efefef] w-56 max-w-lg h-10 px-4 text-sm border border-[#3C4143] rounded-lg focus:outline-none"
                         >
                             <option value="">Szint</option>
                             <option value="kozep">Közép</option>
@@ -120,7 +120,7 @@ export default function Home() {
                         <select
                             value={selectedType}
                             onChange={(e) => setSelectedType(e.target.value)}
-                            className="w-56 max-w-lg h-10 px-4 text-sm bg-white border border-gray-300 rounded-lg focus:outline-none"
+                            className="bg-[#181a1b] text-[#efefef] w-56 max-w-lg h-10 px-4 text-sm border border-[#3C4143] rounded-lg focus:outline-none"
                         >
                             <option value="">Típus</option>
                             <option value="fl">Feladatlap</option>
