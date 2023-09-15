@@ -9,13 +9,13 @@ export default function Home() {
     const [selectedType, setSelectedType] = useState<string>('')
 
     const subjects = [
-        { value: 'k_magyir', label: 'Magyar' },
-        { value: 'k_mat', label: 'Matek' },
-        { value: 'k_tort', label: 'Történelem' },
-        { value: 'k_angol', label: 'Angol' },
-        { value: 'k_nemet', label: 'Német' },
-        { value: 'k_inf', label: 'Közismereti Informatika' },
-        { value: 'k_infoism', label: 'Szakmai Informatika' },
+        { value: 'magyir', label: 'Magyar' },
+        { value: 'mat', label: 'Matek' },
+        { value: 'tort', label: 'Történelem' },
+        { value: 'angol', label: 'Angol' },
+        { value: 'nemet', label: 'Német' },
+        { value: 'inf', label: 'Közismereti Informatika' },
+        { value: 'infoism', label: 'Szakmai Informatika' },
     ]
 
     const [years, setYears] = useState<string[]>([])

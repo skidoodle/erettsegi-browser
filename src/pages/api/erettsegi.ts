@@ -36,18 +36,18 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
         return res.status(400).json({ error: 'Érvénytelen évszak' })
     }
 
-    // @ts-ignore
-    const emeltvizsgatargy = vizsgatargyak[vizsgatargy]
+    let prefix
+    if (szint === 'emelt') {
+        prefix = `e_${vizsgatargy}`
+    } else if (szint === 'kozep') {
+        prefix = `k_${vizsgatargy}`
+    }
 
     let pdfUrl
-    if (tipus === 'fl') {
-        pdfUrl = `${baseUrl}${ev}${evszak}_${szint}/${
-            emeltvizsgatargy || vizsgatargy
-        }_${ev!.slice(-2)}${honap}_fl.pdf`
-    } else if (tipus === 'ut') {
-        pdfUrl = `${baseUrl}${ev}${evszak}_${szint}/${
-            emeltvizsgatargy || vizsgatargy
-        }_${ev!.slice(-2)}${honap}_ut.pdf`
+    if (tipus === 'fl' || tipus === 'ut') {
+        pdfUrl = `${baseUrl}${ev}${evszak}_${szint}/${prefix}_${ev!.slice(
+            -2
+        )}${honap}_${tipus}.pdf`
     } else {
         return res.status(400).json({ error: 'Érvénytelen típus' })
     }
