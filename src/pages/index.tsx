@@ -119,8 +119,8 @@ export default function Home() {
                             className="bg-[#181a1b] text-[#efefef] w-56 max-w-lg h-10 px-4 text-sm border border-[#3C4143] rounded-lg focus:outline-none"
                         >
                             <option value="">Évszak</option>
-                            <option value="osz">Ősz</option>
                             <option value="tavasz">Tavasz</option>
+                            <option value="osz">Ősz</option>
                         </select>
                     </div>
                     <div className="mb-3">
