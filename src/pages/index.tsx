@@ -2,11 +2,13 @@ import { useState, useEffect } from 'react'
 
 export default function Home() {
     const [pdfLink, setPdfLink] = useState<string>('')
+    const [zipLink, setZipLink] = useState<string>('')
     const [selectedSubject, setSelectedSubject] = useState<string>('')
     const [selectedYear, setSelectedYear] = useState<string>('')
     const [selectedSeason, setSelectedSeason] = useState<string>('')
     const [selectedLevel, setSelectedLevel] = useState<string>('')
     const [selectedType, setSelectedType] = useState<string>('')
+    const [selectedFile, setSelectedFile] = useState<string>('')
 
     const subjects = [
         { value: 'magyir', label: 'Magyar' },
@@ -32,9 +34,18 @@ export default function Home() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(
-                    `/api/erettsegi?vizsgatargy=${selectedSubject}&ev=${selectedYear}&evszak=${selectedSeason}&szint=${selectedLevel}&tipus=${selectedType}`
-                )
+                let url = `/api/erettsegi?vizsgatargy=${selectedSubject}&ev=${selectedYear}&evszak=${selectedSeason}&szint=${selectedLevel}&tipus=${selectedType}`
+
+                if (
+                    selectedSubject === 'inf' ||
+                    selectedSubject === 'infoism'
+                ) {
+                    url += `&file=${selectedFile}`
+                } else {
+                    url += `&file="none"`
+                }
+
+                const response = await fetch(url)
 
                 if (response.ok) {
                     const data = await response.json()
@@ -42,6 +53,12 @@ export default function Home() {
                         setPdfLink(data.pdfUrl)
                     } else {
                         console.error('Nincs érvényes PDF link a válaszban.')
+                    }
+
+                    if (data.zipUrl) {
+                        setZipLink(data.zipUrl)
+                    } else {
+                        console.error('Nincs érvényes ZIP link a válaszban.')
                     }
                 } else {
                     console.error('Hiba történt az API hívás során.')
@@ -57,6 +74,7 @@ export default function Home() {
         selectedSeason,
         selectedLevel,
         selectedType,
+        selectedFile,
     ])
 
     return (
@@ -127,6 +145,22 @@ export default function Home() {
                             <option value="ut">Útmutató</option>
                         </select>
                     </div>
+                    {selectedSubject === 'inf' ||
+                    selectedSubject === 'infoism' ? (
+                        <div className="mb-3">
+                            <select
+                                value={selectedFile}
+                                onChange={(e) =>
+                                    setSelectedFile(e.target.value)
+                                }
+                                className="bg-[#181a1b] text-[#efefef] w-56 max-w-lg h-10 px-4 text-sm border border-[#3C4143] rounded-lg focus:outline-none"
+                            >
+                                <option value="">Fájl</option>
+                                <option value="forras">Forrás</option>
+                                <option value="megoldas">Megoldás</option>
+                            </select>
+                        </div>
+                    ) : null}
                     <button
                         className="mt-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                         onClick={
@@ -135,6 +169,17 @@ export default function Home() {
                     >
                         Megnyitás
                     </button>
+                    {selectedSubject === 'inf' ||
+                    selectedSubject === 'infoism' ? (
+                        <button
+                            className="mt-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                            onClick={
+                                zipLink ? () => window.open(zipLink) : () => {}
+                            }
+                        >
+                            Letöltés
+                        </button>
+                    ) : null}
                 </div>
             </div>
         </main>
