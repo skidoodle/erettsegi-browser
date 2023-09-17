@@ -108,9 +108,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       }
       break
     default:
-      pdfUrl = `${baseUrl}${ev}${idoszak}_${szint}/${prefix}_${ev!.slice(
-        -2
-      )}${honap}_${tipus}.pdf`
+      pdfUrl = `${baseUrl}${ev}${idoszak}_${szint}/${prefix}_${shortev}${honap}_${tipus}.pdf`
       break
   }
 
