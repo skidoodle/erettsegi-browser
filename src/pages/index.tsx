@@ -115,13 +115,13 @@ export default function Home() {
 
           <div className="space-x-3">
             <button
-              className="w-24 mt-3 text-sm bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              className="w-24 mt-3 text-sm bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded"
               onClick={flPdfLink ? () => window.open(flPdfLink) : () => {}}
             >
               Feladatlap
             </button>
             <button
-              className="w-24 mt-3 text-sm bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              className="w-24 mt-3 text-sm bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded"
               onClick={utPdfLink ? () => window.open(utPdfLink) : () => {}}
             >
               Útmutató
@@ -130,7 +130,7 @@ export default function Home() {
           <div className="space-x-3">
             {selectedSubject === 'inf' || selectedSubject === 'infoism' ? (
               <button
-                className="w-24 mt-3 text-sm bg-blue-500 hover:bg-blue-700  text-white font-bold py-2 px-4 rounded"
+                className="w-24 mt-3 text-sm bg-blue-500 hover:bg-blue-700  text-white font-bold py-2 px-2 rounded"
                 onClick={flZipLink ? () => window.open(flZipLink) : () => {}}
               >
                 Forrás
@@ -138,7 +138,7 @@ export default function Home() {
             ) : null}
             {selectedSubject === 'inf' || selectedSubject === 'infoism' ? (
               <button
-                className="w-24 mt-3 text-sm bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                className="w-24 mt-3 text-sm bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded"
                 onClick={utZipLink ? () => window.open(utZipLink) : () => {}}
               >
                 Megoldás
