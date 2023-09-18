@@ -10,5 +10,5 @@ export function useAvailableYears(
       availableYears.push(year.toString())
     }
     setYears(availableYears)
-  }, [])
+  }, [setYears])
 }
