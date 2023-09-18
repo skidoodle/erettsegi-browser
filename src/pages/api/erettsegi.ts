@@ -7,7 +7,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const missingParams = []
   if (!ev) missingParams.push('ev')
   if (!szint) missingParams.push('szint')
-  if (!idoszak) missingParams.push('evszak')
+  if (!idoszak) missingParams.push('idoszak')
   if (!vizsgatargy) missingParams.push('vizsgatargy')
   if (!tipus) missingParams.push('tipus')
 
@@ -15,6 +15,31 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     return res
       .status(400)
       .json({ error: `Hiányzó paraméterek: ${missingParams.join(', ')}` })
+  }
+
+  if (ev! <= '2005') {
+    return res.status(400).json({ error: 'Érvénytelen év' })
+  }
+
+  switch (vizsgatargy) {
+    case 'magyir':
+    case 'mat':
+    case 'tort':
+    case 'angol':
+    case 'nemet':
+    case 'inf':
+    case 'infoism':
+      break
+    default:
+      return res.status(400).json({ error: 'Érvénytelen vizsgatárgy' })
+  }
+
+  switch (tipus) {
+    case 'fl':
+    case 'ut':
+      break
+    default:
+      return res.status(400).json({ error: 'Érvénytelen típus' })
   }
 
   let honap
@@ -26,7 +51,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       honap = 'maj'
       break
     default:
-      return res.status(400).json({ error: 'Érvénytelen évszak' })
+      return res.status(400).json({ error: 'Érvénytelen időszak' })
   }
 
   let prefix
@@ -61,7 +86,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
               pdfUrl = `${baseUrl}${ev}${idoszak}_${szint}/${prefix}_${shortev}${honap}_${tipus}.pdf`
               break
             default:
-              return res.status(400).json({ error: 'Érvénytelen fájltípus' })
+              return res.status(400).json({ error: 'Érvénytelen fájl' })
           }
           break
         case 'megoldas':
@@ -75,11 +100,11 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
               pdfUrl = `${baseUrl}${ev}${idoszak}_${szint}/${prefix}_${shortev}${honap}_${tipus}.pdf`
               break
             default:
-              return res.status(400).json({ error: 'Érvénytelen fájltípus' })
+              return res.status(400).json({ error: 'Érvénytelen fájl' })
           }
           break
         default:
-          return res.status(400).json({ error: 'Érvénytelen fájltípus' })
+          return res.status(400).json({ error: 'Érvénytelen fájl' })
       }
       break
     default:
