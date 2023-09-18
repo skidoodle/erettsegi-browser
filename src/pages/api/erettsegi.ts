@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
+import { subjects } from '@/utils/subjects'
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const { ev, szint, vizsgatargy, idoszak } = req.query
@@ -16,21 +17,13 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       .json({ error: `Hiányzó paraméterek: ${missingParams.join(', ')}` })
   }
 
-  if (ev! <= '2005') {
+  if (ev! <= '2012') {
     return res.status(400).json({ error: 'Érvénytelen év' })
   }
 
-  switch (vizsgatargy) {
-    case 'magyir':
-    case 'mat':
-    case 'tort':
-    case 'angol':
-    case 'nemet':
-    case 'inf':
-    case 'infoism':
-      break
-    default:
-      return res.status(400).json({ error: 'Érvénytelen vizsgatárgy' })
+  const validSubjects = subjects.map((subject) => subject.value)
+  if (!vizsgatargy || !validSubjects.includes(vizsgatargy as string)) {
+    return res.status(400).json({ error: 'Érvénytelen vizsgatárgy' })
   }
 
   let honap
