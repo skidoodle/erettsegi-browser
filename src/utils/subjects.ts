@@ -6,4 +6,10 @@ export const subjects = [
   { value: 'nemet', label: 'Német nyelv' },
   { value: 'inf', label: 'Informatika' },
   { value: 'infoism', label: 'Informatikai ismeretek' },
+  { value: 'ker', label: 'Kereskedelmi ismeretek' },
+  { value: 'kozg', label: 'Közgazdasági ismeretek' },
+  { value: 'fiz', label: 'Fizika' },
+  { value: 'kem', label: 'Kémia' },
+  { value: 'bio', label: 'Biológia' },
+  { value: 'fldr', label: 'Földrajz' },
 ]
