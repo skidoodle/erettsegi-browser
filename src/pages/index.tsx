@@ -1,5 +1,6 @@
-import Link from 'next/link'
 import { useState, useEffect } from 'react'
+import { subjects } from '@/utils/subjects'
+import Link from 'next/link'
 
 export default function Home() {
   const [pdfLink, setPdfLink] = useState<string>('')
@@ -10,17 +11,6 @@ export default function Home() {
   const [selectedLevel, setSelectedLevel] = useState<string>('')
   const [selectedType, setSelectedType] = useState<string>('')
   const [selectedFile, setSelectedFile] = useState<string>('')
-
-  const subjects = [
-    { value: 'magyir', label: 'Magyar nyelv és irodalom' },
-    { value: 'mat', label: 'Matematika' },
-    { value: 'tort', label: 'Történelem' },
-    { value: 'angol', label: 'Angol nyelv' },
-    { value: 'nemet', label: 'Német nyelv' },
-    { value: 'inf', label: 'Informatika' },
-    { value: 'infoism', label: 'Informatikai ismeretek' },
-  ]
-
   const [years, setYears] = useState<string[]>([])
 
   useEffect(() => {
