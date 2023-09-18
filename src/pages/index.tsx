@@ -68,7 +68,7 @@ export default function Home() {
               onChange={(e) => setSelectedSubject(e.target.value)}
               className="bg-[#181a1b] text-[#efefef] w-56 max-w-lg h-10 px-4 text-sm border border-[#3C4143] rounded-lg focus:outline-none hover:bg-[#3C4143] transition-colors duration-150"
             >
-              <option value="">Tárgy</option>
+              <option className="hidden" value="">Tárgy</option>
               {subjects.map((subject) => (
                 <option key={subject.value} value={subject.value}>
                   {subject.label}
@@ -82,7 +82,7 @@ export default function Home() {
               onChange={(e) => setSelectedYear(e.target.value)}
               className="bg-[#181a1b] text-[#efefef] w-56 max-w-lg h-10 px-4 text-sm border border-[#3C4143] rounded-lg focus:outline-none hover:bg-[#3C4143] transition-colors duration-150"
             >
-              <option value="">Év</option>
+              <option className="hidden" value="">Év</option>
               {years.map((year) => (
                 <option key={year} value={year}>
                   {year}
@@ -96,7 +96,7 @@ export default function Home() {
               onChange={(e) => setSelectedPeriod(e.target.value)}
               className="bg-[#181a1b] text-[#efefef] w-56 max-w-lg h-10 px-4 text-sm border border-[#3C4143] rounded-lg focus:outline-none hover:bg-[#3C4143] transition-colors duration-150"
             >
-              <option value="">Időszak</option>
+              <option className="hidden" value="">Időszak</option>
               <option value="tavasz">Tavasz</option>
               <option value="osz">Ősz</option>
             </select>
@@ -107,7 +107,7 @@ export default function Home() {
               onChange={(e) => setSelectedLevel(e.target.value)}
               className="bg-[#181a1b] text-[#efefef] w-56 max-w-lg h-10 px-4 text-sm border border-[#3C4143] rounded-lg focus:outline-none hover:bg-[#3C4143] transition-colors duration-150"
             >
-              <option value="">Szint</option>
+              <option className="hidden" value="">Szint</option>
               <option value="kozep">Közép</option>
               <option value="emelt">Emelt</option>
             </select>
