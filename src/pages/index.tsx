@@ -128,7 +128,9 @@ export default function Home() {
             </button>
           </div>
           <div className="space-x-3">
-            {selectedSubject === 'inf' || selectedSubject === 'infoism' ? (
+            {selectedSubject === 'inf' ||
+            selectedSubject === 'infoism' ||
+            selectedSubject === 'digkult' ? (
               <button
                 className="w-24 mt-3 text-sm bg-blue-500 hover:bg-blue-700  text-white font-bold py-2 px-2 rounded"
                 onClick={flZipLink ? () => window.open(flZipLink) : () => {}}
@@ -136,7 +138,9 @@ export default function Home() {
                 Forrás
               </button>
             ) : null}
-            {selectedSubject === 'inf' || selectedSubject === 'infoism' ? (
+            {selectedSubject === 'inf' ||
+            selectedSubject === 'infoism' ||
+            selectedSubject === 'digkult' ? (
               <button
                 className="w-24 mt-3 text-sm bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded"
                 onClick={utZipLink ? () => window.open(utZipLink) : () => {}}

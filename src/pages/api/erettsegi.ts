@@ -60,6 +60,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (vizsgatargy) {
     case 'inf':
     case 'infoism':
+    case 'digkult':
       switch (ZipUrl) {
         case ZipUrl:
           flZipUrl = `${baseUrl}${ev}${idoszak}_${szint}/${prefix}${forras}_${shortev}${honap}_${feladat}.zip`
