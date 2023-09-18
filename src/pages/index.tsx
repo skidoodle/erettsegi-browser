@@ -1,56 +1,43 @@
 import { useState, useEffect } from 'react'
+import { useAvailableYears } from '@/utils/years'
 import { subjects } from '@/utils/subjects'
-import Link from 'next/link'
+import Footer from '@/components/Footer'
 
 export default function Home() {
-  const [pdfLink, setPdfLink] = useState<string>('')
-  const [zipLink, setZipLink] = useState<string>('')
+  const [flPdfLink, setflPdfLink] = useState<string>('')
+  const [utPdfLink, setutPdfLink] = useState<string>('')
+  const [flZipLink, setflZipLink] = useState<string>('')
+  const [utZipLink, setutZipLink] = useState<string>('')
   const [selectedSubject, setSelectedSubject] = useState<string>('')
   const [selectedYear, setSelectedYear] = useState<string>('')
   const [selectedPeriod, setSelectedPeriod] = useState<string>('')
   const [selectedLevel, setSelectedLevel] = useState<string>('')
-  const [selectedType, setSelectedType] = useState<string>('')
-  const [selectedFile, setSelectedFile] = useState<string>('')
   const [years, setYears] = useState<string[]>([])
 
-  useEffect(() => {
-    const currentYear = new Date().getFullYear()
-    const availableYears: string[] = []
-    for (let year = currentYear; year >= 2013; year--) {
-      availableYears.push(year.toString())
-    }
-    setYears(availableYears)
-  }, [])
+  useAvailableYears(setYears)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        let url = `/api/erettsegi?vizsgatargy=${selectedSubject}&ev=${selectedYear}&idoszak=${selectedPeriod}&szint=${selectedLevel}&tipus=${selectedType}`
-
-        switch (selectedSubject) {
-          case 'inf':
-          case 'infoism':
-            url += `&file=${selectedFile}`
-            break
-          default:
-            break
-        }
+        let url = `/api/erettsegi?vizsgatargy=${selectedSubject}&ev=${selectedYear}&idoszak=${selectedPeriod}&szint=${selectedLevel}`
 
         const response = await fetch(url)
 
         if (response.ok) {
           const data = await response.json()
 
-          if (data.pdfUrl) {
-            setPdfLink(data.pdfUrl)
-          } else {
-            console.error('Nincs érvényes PDF link a válaszban.')
-          }
-
-          if (data.zipUrl) {
-            setZipLink(data.zipUrl)
+          if (data.utZipUrl && data.flZipUrl) {
+            setflZipLink(data.flZipUrl)
+            setutZipLink(data.utZipUrl)
           } else {
             console.error('Nincs érvényes ZIP link a válaszban.')
+          }
+
+          if (data.utPdfUrl && data.flPdfUrl) {
+            setflPdfLink(data.flPdfUrl)
+            setutPdfLink(data.utPdfUrl)
+          } else {
+            console.error('Nincs érvényes PDF link a válaszban.')
           }
         } else {
           console.error('Hiba történt az API hívás során.')
@@ -65,8 +52,10 @@ export default function Home() {
     selectedYear,
     selectedPeriod,
     selectedLevel,
-    selectedType,
-    selectedFile,
+    setflPdfLink,
+    setutPdfLink,
+    setflZipLink,
+    setutZipLink,
   ])
 
   return (
@@ -77,7 +66,7 @@ export default function Home() {
             <select
               value={selectedSubject}
               onChange={(e) => setSelectedSubject(e.target.value)}
-              className="bg-[#181a1b] text-[#efefef] w-56 max-w-lg h-10 px-4 text-sm border border-[#3C4143] rounded-lg focus:outline-none"
+              className="bg-[#181a1b] text-[#efefef] w-56 max-w-lg h-10 px-4 text-sm border border-[#3C4143] rounded-lg focus:outline-none hover:bg-[#3C4143] transition-colors duration-150"
             >
               <option value="">Tárgy</option>
               {subjects.map((subject) => (
@@ -91,7 +80,7 @@ export default function Home() {
             <select
               value={selectedYear}
               onChange={(e) => setSelectedYear(e.target.value)}
-              className="bg-[#181a1b] text-[#efefef] w-56 max-w-lg h-10 px-4 text-sm border border-[#3C4143] rounded-lg focus:outline-none"
+              className="bg-[#181a1b] text-[#efefef] w-56 max-w-lg h-10 px-4 text-sm border border-[#3C4143] rounded-lg focus:outline-none hover:bg-[#3C4143] transition-colors duration-150"
             >
               <option value="">Év</option>
               {years.map((year) => (
@@ -105,7 +94,7 @@ export default function Home() {
             <select
               value={selectedPeriod}
               onChange={(e) => setSelectedPeriod(e.target.value)}
-              className="bg-[#181a1b] text-[#efefef] w-56 max-w-lg h-10 px-4 text-sm border border-[#3C4143] rounded-lg focus:outline-none"
+              className="bg-[#181a1b] text-[#efefef] w-56 max-w-lg h-10 px-4 text-sm border border-[#3C4143] rounded-lg focus:outline-none hover:bg-[#3C4143] transition-colors duration-150"
             >
               <option value="">Időszak</option>
               <option value="tavasz">Tavasz</option>
@@ -116,71 +105,48 @@ export default function Home() {
             <select
               value={selectedLevel}
               onChange={(e) => setSelectedLevel(e.target.value)}
-              className="bg-[#181a1b] text-[#efefef] w-56 max-w-lg h-10 px-4 text-sm border border-[#3C4143] rounded-lg focus:outline-none"
+              className="bg-[#181a1b] text-[#efefef] w-56 max-w-lg h-10 px-4 text-sm border border-[#3C4143] rounded-lg focus:outline-none hover:bg-[#3C4143] transition-colors duration-150"
             >
               <option value="">Szint</option>
               <option value="kozep">Közép</option>
               <option value="emelt">Emelt</option>
             </select>
           </div>
-          <div className="mb-3">
-            <select
-              value={selectedType}
-              onChange={(e) => setSelectedType(e.target.value)}
-              className="bg-[#181a1b] text-[#efefef] w-56 max-w-lg h-10 px-4 text-sm border border-[#3C4143] rounded-lg focus:outline-none"
-            >
-              <option value="">Típus</option>
-              <option value="fl">Feladatlap</option>
-              <option value="ut">Útmutató</option>
-            </select>
-          </div>
-          {selectedSubject === 'inf' || selectedSubject === 'infoism' ? (
-            <div className="mb-3">
-              <select
-                value={selectedFile}
-                onChange={(e) => setSelectedFile(e.target.value)}
-                className="bg-[#181a1b] text-[#efefef] w-56 max-w-lg h-10 px-4 text-sm border border-[#3C4143] rounded-lg focus:outline-none"
-              >
-                <option value="">Fájl</option>
-                <option value="forras">Forrás</option>
-                <option value="megoldas">Megoldás</option>
-              </select>
-            </div>
-          ) : null}
-          <button
-            className="mt-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            onClick={pdfLink ? () => window.open(pdfLink) : () => {}}
-          >
-            Megnyitás
-          </button>
-          {selectedSubject === 'inf' || selectedSubject === 'infoism' ? (
+
+          <div className="space-x-3">
             <button
-              className="mt-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-              onClick={zipLink ? () => window.open(zipLink) : () => {}}
+              className="w-28 mt-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              onClick={flPdfLink ? () => window.open(flPdfLink) : () => {}}
             >
-              Letöltés
+              Feladatlap
             </button>
-          ) : null}
-        </div>
-        <div className="fixed bottom-5 left-0 right-0 text-center py-4">
-          <p className="text-sm text-gray-400">
-            <Link
-              href="https://albert.lol"
-              target="_blank"
-              className="text-blue-500 hover:text-blue-700"
+            <button
+              className="w-28 mt-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              onClick={utPdfLink ? () => window.open(utPdfLink) : () => {}}
             >
-              albert
-            </Link>
-            {' | '}
-            <Link
-              href="https://github.com/skidoodle/erettsegi-browser"
-              target="_blank"
-              className="text-blue-500 hover:text-blue-700"
-            >
-              github
-            </Link>
-          </p>
+              Útmutató
+            </button>
+          </div>
+          <div className="space-x-3">
+            {selectedSubject === 'inf' || selectedSubject === 'infoism' ? (
+              <button
+                className="w-28 mt-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                onClick={flZipLink ? () => window.open(flZipLink) : () => {}}
+              >
+                Forrás
+              </button>
+            ) : null}
+            {selectedSubject === 'inf' || selectedSubject === 'infoism' ? (
+              <button
+                className="w-28 mt-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                onClick={utZipLink ? () => window.open(utZipLink) : () => {}}
+              >
+                Megoldás
+              </button>
+            ) : null}
+          </div>
         </div>
+        <Footer />
       </div>
     </main>
   )

@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { ev, szint, vizsgatargy, idoszak, tipus, file } = req.query
+  const { ev, szint, vizsgatargy, idoszak } = req.query
   const baseUrl = 'https://dload-oktatas.educatio.hu/erettsegi/feladatok_'
 
   const missingParams = []
@@ -9,7 +9,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   if (!szint) missingParams.push('szint')
   if (!idoszak) missingParams.push('idoszak')
   if (!vizsgatargy) missingParams.push('vizsgatargy')
-  if (!tipus) missingParams.push('tipus')
 
   if (missingParams.length > 0) {
     return res
@@ -32,14 +31,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       break
     default:
       return res.status(400).json({ error: 'Érvénytelen vizsgatárgy' })
-  }
-
-  switch (tipus) {
-    case 'fl':
-    case 'ut':
-      break
-    default:
-      return res.status(400).json({ error: 'Érvénytelen típus' })
   }
 
   let honap
@@ -66,51 +57,32 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       return res.status(400).json({ error: 'Érvénytelen szint' })
   }
 
+  const feladat = 'fl'
+  const utmutato = 'ut'
   const forras = 'for'
   const megoldas = 'meg'
   const shortev = ev!.slice(-2)
 
-  let pdfUrl, zipUrl
+  let flPdfUrl, utPdfUrl, flZipUrl, utZipUrl, ZipUrl
   switch (vizsgatargy) {
     case 'inf':
     case 'infoism':
-      switch (file) {
-        case 'forras':
-          switch (tipus) {
-            case 'fl':
-              zipUrl = `${baseUrl}${ev}${idoszak}_${szint}/${prefix}${forras}_${shortev}${honap}_${tipus}.zip`
-              pdfUrl = `${baseUrl}${ev}${idoszak}_${szint}/${prefix}_${shortev}${honap}_${tipus}.pdf`
-              break
-            case 'ut':
-              zipUrl = `${baseUrl}${ev}${idoszak}_${szint}/${prefix}${forras}_${shortev}${honap}_fl.zip`
-              pdfUrl = `${baseUrl}${ev}${idoszak}_${szint}/${prefix}_${shortev}${honap}_${tipus}.pdf`
-              break
-            default:
-              return res.status(400).json({ error: 'Érvénytelen fájl' })
-          }
-          break
-        case 'megoldas':
-          switch (tipus) {
-            case 'ut':
-              zipUrl = `${baseUrl}${ev}${idoszak}_${szint}/${prefix}${megoldas}_${shortev}${honap}_${tipus}.zip`
-              pdfUrl = `${baseUrl}${ev}${idoszak}_${szint}/${prefix}_${shortev}${honap}_${tipus}.pdf`
-              break
-            case 'fl':
-              zipUrl = `${baseUrl}${ev}${idoszak}_${szint}/${prefix}${megoldas}_${shortev}${honap}_ut.zip`
-              pdfUrl = `${baseUrl}${ev}${idoszak}_${szint}/${prefix}_${shortev}${honap}_${tipus}.pdf`
-              break
-            default:
-              return res.status(400).json({ error: 'Érvénytelen fájl' })
-          }
+      switch (ZipUrl) {
+        case ZipUrl:
+          flZipUrl = `${baseUrl}${ev}${idoszak}_${szint}/${prefix}${forras}_${shortev}${honap}_${feladat}.zip`
+          flPdfUrl = `${baseUrl}${ev}${idoszak}_${szint}/${prefix}_${shortev}${honap}_${utmutato}.pdf`
+          utZipUrl = `${baseUrl}${ev}${idoszak}_${szint}/${prefix}${megoldas}_${shortev}${honap}_${utmutato}.zip`
+          utPdfUrl = `${baseUrl}${ev}${idoszak}_${szint}/${prefix}_${shortev}${honap}_${utmutato}.pdf`
           break
         default:
           return res.status(400).json({ error: 'Érvénytelen fájl' })
       }
       break
     default:
-      pdfUrl = `${baseUrl}${ev}${idoszak}_${szint}/${prefix}_${shortev}${honap}_${tipus}.pdf`
+      flPdfUrl = `${baseUrl}${ev}${idoszak}_${szint}/${prefix}_${shortev}${honap}_${feladat}.pdf`
+      utPdfUrl = `${baseUrl}${ev}${idoszak}_${szint}/${prefix}_${shortev}${honap}_${utmutato}.pdf`
       break
   }
 
-  res.status(200).json({ pdfUrl, zipUrl })
+  res.status(200).json({ flPdfUrl, utPdfUrl, flZipUrl, utZipUrl })
 }
