@@ -2,8 +2,8 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { subjects } from '@/utils/subjects'
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { ev, szint, vizsgatargy, idoszak } = req.query
-  const baseUrl = 'https://dload-oktatas.educatio.hu/erettsegi/feladatok_'
+  const { vizsgatargy, ev, idoszak, szint } = req.query
+  const baseUrl = `https://dload-oktatas.educatio.hu/erettsegi/feladatok_${ev}${idoszak}_${szint}/`
 
   const missingParams = []
   if (!ev) missingParams.push('ev')
@@ -56,25 +56,19 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const megoldas = 'meg'
   const shortev = ev!.slice(-2)
 
-  let flPdfUrl, utPdfUrl, flZipUrl, utZipUrl, ZipUrl
+  let flPdfUrl, utPdfUrl, flZipUrl, utZipUrl
   switch (vizsgatargy) {
     case 'inf':
     case 'infoism':
     case 'digkult':
-      switch (ZipUrl) {
-        case ZipUrl:
-          flZipUrl = `${baseUrl}${ev}${idoszak}_${szint}/${prefix}${forras}_${shortev}${honap}_${feladat}.zip`
-          flPdfUrl = `${baseUrl}${ev}${idoszak}_${szint}/${prefix}_${shortev}${honap}_${utmutato}.pdf`
-          utZipUrl = `${baseUrl}${ev}${idoszak}_${szint}/${prefix}${megoldas}_${shortev}${honap}_${utmutato}.zip`
-          utPdfUrl = `${baseUrl}${ev}${idoszak}_${szint}/${prefix}_${shortev}${honap}_${utmutato}.pdf`
-          break
-        default:
-          return res.status(400).json({ error: 'Érvénytelen fájl' })
-      }
+      flZipUrl = `${baseUrl}${prefix}${forras}_${shortev}${honap}_${feladat}.zip`
+      flPdfUrl = `${baseUrl}${prefix}_${shortev}${honap}_${utmutato}.pdf`
+      utZipUrl = `${baseUrl}${prefix}${megoldas}_${shortev}${honap}_${utmutato}.zip`
+      utPdfUrl = `${baseUrl}${prefix}_${shortev}${honap}_${utmutato}.pdf`
       break
     default:
-      flPdfUrl = `${baseUrl}${ev}${idoszak}_${szint}/${prefix}_${shortev}${honap}_${feladat}.pdf`
-      utPdfUrl = `${baseUrl}${ev}${idoszak}_${szint}/${prefix}_${shortev}${honap}_${utmutato}.pdf`
+      flPdfUrl = `${baseUrl}${prefix}_${shortev}${honap}_${feladat}.pdf`
+      utPdfUrl = `${baseUrl}${prefix}_${shortev}${honap}_${utmutato}.pdf`
       break
   }
 
