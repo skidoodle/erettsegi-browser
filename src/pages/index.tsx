@@ -62,7 +62,7 @@ export default function Home() {
   ])
 
   return (
-    <main className="dark text-foreground bg-background">
+    <main className="dark:bg-[#121212] text-foreground bg-background">
       <div className="flex min-h-screen flex-col items-center justify-between p-24">
         <div className="container mx-auto mt-15">
           <div className="flex flex-col items-center justify-center">

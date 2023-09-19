@@ -17,7 +17,11 @@ export default function App({ Component, pageProps }: AppProps) {
         <title>Érettségi kereső</title>
       </Head>
       <NextUIProvider className={`${inter.variable} font-sans`}>
-        <NextThemesProvider attribute="class" defaultTheme="dark">
+        <NextThemesProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem={true}
+        >
           <Component {...pageProps} />
         </NextThemesProvider>
       </NextUIProvider>
