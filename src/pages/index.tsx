@@ -4,6 +4,7 @@ import { subjects } from '@/utils/subjects'
 import Footer from '@/components/Footer'
 import { Select, SelectItem } from '@nextui-org/select'
 import { Button, ButtonGroup } from '@nextui-org/button'
+import { Divider } from '@nextui-org/divider'
 
 export default function Home() {
   const [flPdfLink, setflPdfLink] = useState<string>('')
@@ -137,6 +138,7 @@ export default function Home() {
                 >
                   Feladatlap
                 </Button>
+                <Divider orientation="vertical" />
                 <Button
                   isDisabled={!utPdfLink}
                   className="w-24 mt-3 text-sm bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2"
@@ -161,6 +163,7 @@ export default function Home() {
                     Forrás
                   </Button>
                 ) : null}
+                <Divider orientation="vertical" />
                 {selectedSubject === 'inf' ||
                 selectedSubject === 'infoism' ||
                 selectedSubject === 'digkult' ? (
