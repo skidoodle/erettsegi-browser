@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
 import { useAvailableYears } from '@/utils/years'
 import { subjects } from '@/utils/subjects'
-import Footer from '@/components/Footer'
 import { Select, SelectItem } from '@nextui-org/select'
 import { Button, ButtonGroup } from '@nextui-org/button'
 import { Divider } from '@nextui-org/divider'
+import Footer from '@/components/Footer'
 
 export default function Home() {
   const [flPdfLink, setflPdfLink] = useState<string>('')
