@@ -1,7 +1,9 @@
 import { Inter } from 'next/font/google'
 import { AppProps } from 'next/app'
-import '@/styles/globals.css'
+import { NextUIProvider } from '@nextui-org/react'
+import { ThemeProvider as NextThemesProvider } from 'next-themes'
 import Head from 'next/head'
+import '@/styles/globals.css'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -14,9 +16,11 @@ export default function App({ Component, pageProps }: AppProps) {
       <Head>
         <title>Érettségi kereső</title>
       </Head>
-      <main className={`${inter.variable} font-sans`}>
-        <Component {...pageProps} />
-      </main>
+      <NextUIProvider className={`${inter.variable} font-sans`}>
+        <NextThemesProvider attribute="class" defaultTheme="dark">
+          <Component {...pageProps} />
+        </NextThemesProvider>
+      </NextUIProvider>
     </>
   )
 }
