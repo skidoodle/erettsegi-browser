@@ -1,10 +1,14 @@
 import { useState, useEffect } from 'react'
 import { useAvailableYears } from '@/utils/years'
 import { subjects } from '@/utils/subjects'
-import { Select, SelectItem } from '@nextui-org/select'
-import { Button, ButtonGroup } from '@nextui-org/button'
-import { Divider } from '@nextui-org/divider'
-import Footer from '@/components/Footer'
+import {
+  Select,
+  SelectItem,
+  Button,
+  ButtonGroup,
+  Divider,
+} from '@nextui-org/react'
+import { Footer } from '@/components/Footer'
 
 export default function Home() {
   const [flPdfLink, setflPdfLink] = useState<string>('')
@@ -62,11 +66,14 @@ export default function Home() {
   ])
 
   return (
-    <main className="dark:bg-[#121212] text-foreground bg-background">
-      <div className="flex min-h-screen flex-col items-center justify-between p-24">
-        <div className="container mx-auto mt-15">
+    <main className="dark:bg-[#121212] text-foreground bg-background py-5">
+      <h1 className="text-4xl font-bold text-blue-400 text-center mt-16">
+        Érettségi kereső
+      </h1>
+      <div className="flex min-h-screen flex-col items-center justify-between">
+        <div className="container mx-auto">
           <div className="flex flex-col items-center justify-center">
-            <div className="mb-3">
+            <div className="mt-5 mb-3">
               <Select
                 selectionMode="single"
                 label="Tárgy"
@@ -180,9 +187,9 @@ export default function Home() {
               </ButtonGroup>
             </div>
           </div>
-          <Footer />
         </div>
       </div>
+      <Footer />
     </main>
   )
 }

@@ -1,28 +1,11 @@
-import React from 'react'
-import Link from 'next/link'
+import { Source } from '@/components/Source'
+import { ThemeSwitcher } from '@/components/ThemeSwitcher'
 
-const Footer: React.FC = () => {
+export const Footer = () => {
   return (
-    <div className="fixed bottom-0 py-4 left-0 right-0 text-center">
-      <p className="text-sm text-gray-400">
-        <Link
-          href="https://albert.lol"
-          target="_blank"
-          className="text-blue-500 hover:text-blue-700"
-        >
-          albert
-        </Link>
-        {' | '}
-        <Link
-          href="https://github.com/skidoodle/erettsegi-browser"
-          target="_blank"
-          className="text-blue-500 hover:text-blue-700"
-        >
-          github
-        </Link>
-      </p>
+    <div className="fixed bottom-0 py-5 left-0 right-0 text-center space-x-5">
+      <Source />
+      <ThemeSwitcher />
     </div>
   )
 }
-
-export default Footer
