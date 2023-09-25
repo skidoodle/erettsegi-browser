@@ -1,6 +1,7 @@
 import { Inter } from 'next/font/google'
 import { AppProps } from 'next/app'
 import { NextUIProvider } from '@nextui-org/react'
+import { Analytics } from '@vercel/analytics/react'
 import { ThemeProvider as NextThemesProvider } from 'next-themes'
 import Head from 'next/head'
 import '@/styles/globals.css'
@@ -13,6 +14,7 @@ const inter = Inter({
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
+      <Analytics />
       <Head>
         <title>Érettségi kereső</title>
       </Head>
