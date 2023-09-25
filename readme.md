@@ -9,8 +9,8 @@
 ```bash
 git clone https://github.com/skidoodle/erettsegi-browser
 cd erettsegi-browser
-yarn install
-yarn dev
+pnpm install
+pnpm dev
 ```
 
 ## License
