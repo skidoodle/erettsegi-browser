@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
-import { useAvailableYears } from '@/utils/years'
+import { Footer } from '@/components/Footer'
 import { subjects } from '@/utils/subjects'
+import { useYears } from '@/utils/years'
 import {
   Select,
   SelectItem,
@@ -8,7 +9,6 @@ import {
   ButtonGroup,
   Divider,
 } from '@nextui-org/react'
-import { Footer } from '@/components/Footer'
 
 export default function Home() {
   const [flPdfLink, setflPdfLink] = useState<string>('')
@@ -21,7 +21,7 @@ export default function Home() {
   const [selectedLevel, setSelectedLevel] = useState<string>('')
   const [years, setYears] = useState<string[]>([])
 
-  useAvailableYears(setYears)
+  useYears(setYears)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -66,20 +66,20 @@ export default function Home() {
   ])
 
   return (
-    <main className="dark:bg-[#121212] text-foreground bg-background py-5">
-      <h1 className="text-4xl font-bold text-blue-400 text-center mt-16">
+    <main className='dark:bg-[#121212] text-foreground bg-background py-5'>
+      <h1 className='text-4xl font-bold text-blue-400 text-center mt-16'>
         Érettségi kereső
       </h1>
-      <div className="flex min-h-screen flex-col items-center justify-between">
-        <div className="container mx-auto">
-          <div className="flex flex-col items-center justify-center">
-            <div className="mt-5 mb-3">
+      <div className='flex min-h-screen flex-col items-center justify-between'>
+        <div className='container mx-auto'>
+          <div className='flex flex-col items-center justify-center'>
+            <div className='mt-5 mb-3'>
               <Select
-                selectionMode="single"
-                label="Tárgy"
+                selectionMode='single'
+                label='Tárgy'
                 value={selectedSubject}
                 onChange={(e) => setSelectedSubject(e.target.value)}
-                className="w-56"
+                className='w-56'
               >
                 {subjects.map((subject) => (
                   <SelectItem key={subject.value} value={subject.value}>
@@ -88,13 +88,13 @@ export default function Home() {
                 ))}
               </Select>
             </div>
-            <div className="mb-3">
+            <div className='mb-3'>
               <Select
-                selectionMode="single"
-                label="Év"
+                selectionMode='single'
+                label='Év'
                 value={selectedYear}
                 onChange={(e) => setSelectedYear(e.target.value)}
-                className="w-56"
+                className='w-56'
               >
                 {years.map((year) => (
                   <SelectItem key={year} value={year}>
@@ -103,13 +103,13 @@ export default function Home() {
                 ))}
               </Select>
             </div>
-            <div className="mb-3">
+            <div className='mb-3'>
               <Select
-                selectionMode="single"
-                label="Időszak"
+                selectionMode='single'
+                label='Időszak'
                 value={selectedPeriod}
                 onChange={(e) => setSelectedPeriod(e.target.value)}
-                className="w-56"
+                className='w-56'
               >
                 <SelectItem key={'tavasz'} value={'tavasz'}>
                   Tavasz
@@ -119,13 +119,13 @@ export default function Home() {
                 </SelectItem>
               </Select>
             </div>
-            <div className="mb-3">
+            <div className='mb-3'>
               <Select
-                selectionMode="single"
-                label="Szint"
+                selectionMode='single'
+                label='Szint'
                 value={selectedLevel}
                 onChange={(e) => setSelectedLevel(e.target.value)}
-                className="w-56"
+                className='w-56'
               >
                 <SelectItem key={'kozep'} value={'kozep'}>
                   Közép
@@ -136,33 +136,33 @@ export default function Home() {
               </Select>
             </div>
 
-            <div className="space-x-3">
+            <div className='space-x-3'>
               <ButtonGroup>
                 <Button
                   isDisabled={!flPdfLink}
-                  className="w-24 mt-3 text-sm bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2"
+                  className='w-24 mt-3 text-sm bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2'
                   onClick={flPdfLink ? () => window.open(flPdfLink) : () => {}}
                 >
                   Feladatlap
                 </Button>
-                <Divider orientation="vertical" />
+                <Divider orientation='vertical' />
                 <Button
                   isDisabled={!utPdfLink}
-                  className="w-24 mt-3 text-sm bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2"
+                  className='w-24 mt-3 text-sm bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2'
                   onClick={utPdfLink ? () => window.open(utPdfLink) : () => {}}
                 >
                   Útmutató
                 </Button>
               </ButtonGroup>
             </div>
-            <div className="space-x-3">
+            <div className='space-x-3'>
               <ButtonGroup>
                 {selectedSubject === 'inf' ||
                 selectedSubject === 'infoism' ||
                 selectedSubject === 'digkult' ? (
                   <Button
                     isDisabled={!flZipLink}
-                    className="w-24 mt-3 text-sm bg-blue-500 hover:bg-blue-700  text-white font-bold py-2 px-2"
+                    className='w-24 mt-3 text-sm bg-blue-500 hover:bg-blue-700  text-white font-bold py-2 px-2'
                     onClick={
                       flZipLink ? () => window.open(flZipLink) : () => {}
                     }
@@ -170,13 +170,13 @@ export default function Home() {
                     Forrás
                   </Button>
                 ) : null}
-                <Divider orientation="vertical" />
+                <Divider orientation='vertical' />
                 {selectedSubject === 'inf' ||
                 selectedSubject === 'infoism' ||
                 selectedSubject === 'digkult' ? (
                   <Button
                     isDisabled={!utZipLink}
-                    className="w-24 mt-3 text-sm bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2"
+                    className='w-24 mt-3 text-sm bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2'
                     onClick={
                       utZipLink ? () => window.open(utZipLink) : () => {}
                     }

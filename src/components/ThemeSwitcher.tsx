@@ -1,30 +1,29 @@
-import { BsSunFill, BsMoonFill } from 'react-icons/bs'
-import { useEffect, useState } from 'react'
-import { useTheme } from 'next-themes'
+import { VscColorMode } from 'react-icons/vsc'
 import { Button } from '@nextui-org/button'
+import { useTheme } from 'next-themes'
 
 export const ThemeSwitcher = () => {
-  const [mounted, setMounted] = useState(false)
   const { theme, setTheme } = useTheme()
 
   const toggle = () => {
-    if (theme === 'dark') {
-      setTheme('light')
-    } else {
-      setTheme('dark')
+    switch (theme) {
+      case 'dark':
+        setTheme('light')
+        break
+      case 'light':
+        setTheme('dark')
+        break
+      default:
+        break
     }
   }
 
-  useEffect(() => setMounted(true), [])
-
-  if (!mounted) return null
-
   return (
-    <Button aria-label="Switch Theme" size="sm" onClick={() => toggle()}>
+    <Button aria-label='Switch Theme' size='sm' onClick={() => toggle()}>
       {theme === 'light' ? (
-        <BsMoonFill style={{ fill: 'black' }} size={20} />
+        <VscColorMode style={{ fill: 'black' }} size={20} />
       ) : (
-        <BsSunFill size={20} />
+        <VscColorMode size={20} key={'dark'} />
       )}
     </Button>
   )

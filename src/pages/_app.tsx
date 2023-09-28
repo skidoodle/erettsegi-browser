@@ -1,8 +1,8 @@
+import { ThemeProvider as NextThemesProvider } from 'next-themes'
+import { Analytics } from '@vercel/analytics/react'
+import { NextUIProvider } from '@nextui-org/react'
 import { Inter } from 'next/font/google'
 import { AppProps } from 'next/app'
-import { NextUIProvider } from '@nextui-org/react'
-import { Analytics } from '@vercel/analytics/react'
-import { ThemeProvider as NextThemesProvider } from 'next-themes'
 import Head from 'next/head'
 import '@/styles/globals.css'
 
@@ -20,8 +20,8 @@ export default function App({ Component, pageProps }: AppProps) {
       </Head>
       <NextUIProvider className={`${inter.variable} font-sans`}>
         <NextThemesProvider
-          attribute="class"
-          defaultTheme="dark"
+          attribute='class'
+          defaultTheme='dark'
           enableSystem={true}
         >
           <Component {...pageProps} />
