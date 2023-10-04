@@ -76,6 +76,7 @@ export default function Home() {
             <div className='mt-5 mb-3'>
               <Select
                 selectionMode='single'
+                disallowEmptySelection={true}
                 label='Tárgy'
                 value={selectedSubject}
                 onChange={(e) => setSelectedSubject(e.target.value)}
@@ -91,6 +92,7 @@ export default function Home() {
             <div className='mb-3'>
               <Select
                 selectionMode='single'
+                disallowEmptySelection={true}
                 label='Év'
                 value={selectedYear}
                 onChange={(e) => setSelectedYear(e.target.value)}
@@ -106,6 +108,7 @@ export default function Home() {
             <div className='mb-3'>
               <Select
                 selectionMode='single'
+                disallowEmptySelection={true}
                 label='Időszak'
                 value={selectedPeriod}
                 onChange={(e) => setSelectedPeriod(e.target.value)}
@@ -122,6 +125,7 @@ export default function Home() {
             <div className='mb-3'>
               <Select
                 selectionMode='single'
+                disallowEmptySelection={true}
                 label='Szint'
                 value={selectedLevel}
                 onChange={(e) => setSelectedLevel(e.target.value)}
