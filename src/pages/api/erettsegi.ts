@@ -62,7 +62,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     case 'infoism':
     case 'digkult':
       flZipUrl = `${baseUrl}${prefix}${forras}_${shortev}${honap}_${feladat}.zip`
-      flPdfUrl = `${baseUrl}${prefix}_${shortev}${honap}_${utmutato}.pdf`
+      flPdfUrl = `${baseUrl}${prefix}_${shortev}${honap}_${feladat}.pdf`
       utZipUrl = `${baseUrl}${prefix}${megoldas}_${shortev}${honap}_${utmutato}.zip`
       utPdfUrl = `${baseUrl}${prefix}_${shortev}${honap}_${utmutato}.pdf`
       break
