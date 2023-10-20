@@ -53,7 +53,9 @@ export default function Home() {
         console.error('Hiba történt az API hívás során.', error)
       }
     }
-    fetchData()
+    if (selectedLevel && selectedPeriod && selectedSubject && selectedYear) {
+      fetchData()
+    }
   }, [
     selectedSubject,
     selectedYear,
