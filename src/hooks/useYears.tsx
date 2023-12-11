@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-export function useYears(
+export default function useYears(
   setYears: React.Dispatch<React.SetStateAction<string[]>>
 ) {
   useEffect(() => {
