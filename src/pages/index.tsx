@@ -50,7 +50,7 @@ export default function Home() {
         setutPdfLink
       )
     }
-  })
+  }, [selectedLevel, selectedPeriod, selectedSubject, selectedYear])
 
   return (
     <main className='dark:bg-[#121212] text-foreground bg-background py-5'>
