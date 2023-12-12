@@ -2,7 +2,7 @@ import { ThemeProvider as NextThemesProvider } from 'next-themes'
 import { Analytics } from '@vercel/analytics/react'
 import { NextUIProvider } from '@nextui-org/react'
 import { Inter } from 'next/font/google'
-import { AppProps } from 'next/app'
+import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import '@/styles/globals.css'
 

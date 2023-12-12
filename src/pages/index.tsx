@@ -39,7 +39,7 @@ export default function Home() {
 
   useEffect(() => {
     if (selectedLevel && selectedPeriod && selectedSubject && selectedYear) {
-      fetchData(
+      void fetchData(
         selectedSubject,
         selectedYear,
         selectedPeriod,

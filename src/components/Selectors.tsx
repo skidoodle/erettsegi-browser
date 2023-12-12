@@ -1,5 +1,5 @@
 import { Select, SelectItem } from '@nextui-org/react'
-import { SelectorProps } from '@/utils/props'
+import type { SelectorProps } from '@/utils/props'
 
 export const SubjectSelector: React.FC<
   Pick<SelectorProps, 'selectedSubject' | 'setSelectedSubject' | 'subjects'>

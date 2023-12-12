@@ -9,25 +9,26 @@ export const fetchData = async (
   setutPdfLink: (link: string) => void
 ) => {
   try {
-    let url = `/api/erettsegi?vizsgatargy=${selectedSubject}&ev=${selectedYear}&idoszak=${selectedPeriod}&szint=${selectedLevel}`
+    const url = `/api/erettsegi?vizsgatargy=${selectedSubject}&ev=${selectedYear}&idoszak=${selectedPeriod}&szint=${selectedLevel}`
 
     const response = await fetch(url)
 
     if (response.ok) {
-      const data = await response.json()
+      const data = (await response.json()) as {
+        flZipUrl: string
+        utZipUrl: string
+        flPdfUrl: string
+        utPdfUrl: string
+      }
 
       if (data.utZipUrl && data.flZipUrl) {
         setflZipLink(data.flZipUrl)
         setutZipLink(data.utZipUrl)
-      } else {
-        console.error('Nincs érvényes ZIP link a válaszban.')
       }
 
       if (data.utPdfUrl && data.flPdfUrl) {
         setflPdfLink(data.flPdfUrl)
         setutPdfLink(data.utPdfUrl)
-      } else {
-        console.error('Nincs érvényes PDF link a válaszban.')
       }
     } else {
       console.error('Hiba történt az API hívás során.')

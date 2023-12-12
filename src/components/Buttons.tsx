@@ -1,27 +1,68 @@
 import { Button } from '@nextui-org/react'
+import { useState, useEffect } from 'react'
+import type { ButtonProps } from '@/utils/props'
+import type { ButtonColor } from '@/utils/types'
 
-export const PdfButton: React.FC<{ label: string; link: string }> = ({
-  label,
-  link,
-}) => (
-  <Button
-    isDisabled={!link}
-    className='w-24 mt-3 text-sm bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2'
-    onClick={link ? () => window.open(link) : () => {}}
-  >
-    {label}
-  </Button>
+const CustomButton: React.FC<ButtonProps> = ({ label, link }) => {
+  const [status, setStatus] = useState<number>(0)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+
+  const checkLinkStatus = async (): Promise<void> => {
+    if (link) {
+      try {
+        setIsLoading(true)
+        const response = await fetch(
+          `/api/validate?link=${encodeURIComponent(link)}`
+        )
+        const data = (await response.json()) as { status: number }
+        setStatus(data.status)
+      } catch (error) {
+        setStatus(500)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+  }
+
+  useEffect(() => {
+    void checkLinkStatus()
+  }, [link])
+
+  const getColor = (): ButtonColor => {
+    if (status === 200) {
+      return 'primary'
+    } else if (status === 404) {
+      return 'danger'
+    } else {
+      return 'default'
+    }
+  }
+
+  const handleClick = () => {
+    if (status === 200 && link) {
+      window.open(link)
+    } else {
+      console.error('A hivatkozás nem elérhető.')
+    }
+  }
+
+  return (
+    <Button
+      isDisabled={status !== 200 || !link || isLoading}
+      isLoading={isLoading}
+      className='w-24 mt-3 text-sm font-bold py-2 px-2'
+      color={getColor()}
+      onClick={handleClick}
+    >
+      {label}
+    </Button>
+  )
+}
+
+export const PdfButton: React.FC<ButtonProps> = ({ label, link }) => (
+  <CustomButton label={label} link={link} />
 )
 
-export const ZipButton: React.FC<{ label: string; link: string }> = ({
-  label,
-  link,
-}) => (
-  <Button
-    isDisabled={!link}
-    className='w-24 mt-3 text-sm bg-blue-500 hover:bg-blue-700  text-white font-bold py-2 px-2'
-    onClick={link ? () => window.open(link) : () => {}}
-  >
-    {label}
-  </Button>
+export const ZipButton: React.FC<ButtonProps> = ({ label, link }) => (
+  <CustomButton label={label} link={link} />
 )

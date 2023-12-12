@@ -1,8 +1,14 @@
-import { NextApiRequest, NextApiResponse } from 'next'
+import type { NextApiRequest, NextApiResponse } from 'next'
 import { subjects } from '@/utils/subjects'
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { vizsgatargy, ev, idoszak, szint } = req.query
+  const { vizsgatargy, ev, idoszak, szint } = req.query as {
+    vizsgatargy: string
+    ev: string
+    idoszak: string
+    szint: string
+  }
+
   const baseUrl = `https://dload-oktatas.educatio.hu/erettsegi/feladatok_${ev}${idoszak}_${szint}/`
 
   const missingParams = []
@@ -17,16 +23,16 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       .json({ error: `Hiányzó paraméterek: ${missingParams.join(', ')}` })
   }
 
-  if (ev! <= '2012') {
+  if (ev <= '2012') {
     return res.status(400).json({ error: 'Érvénytelen év' })
   }
 
   const validSubjects = subjects.map((subject) => subject.value)
-  if (!vizsgatargy || !validSubjects.includes(vizsgatargy as string)) {
+  if (!vizsgatargy || !validSubjects.includes(vizsgatargy)) {
     return res.status(400).json({ error: 'Érvénytelen vizsgatárgy' })
   }
 
-  let honap
+  let honap: string
   switch (idoszak) {
     case 'osz':
       honap = 'okt'
@@ -38,7 +44,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       return res.status(400).json({ error: 'Érvénytelen időszak' })
   }
 
-  let prefix
+  let prefix: string
   switch (szint) {
     case 'emelt':
       prefix = `e_${vizsgatargy}`
@@ -54,7 +60,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const utmutato = 'ut'
   const forras = 'for'
   const megoldas = 'meg'
-  const shortev = ev!.slice(-2)
+  const shortev = ev.slice(-2)
 
   let flPdfUrl, utPdfUrl, flZipUrl, utZipUrl
   switch (vizsgatargy) {

@@ -10,3 +10,8 @@ export interface SelectorProps {
   setSelectedPeriod: React.Dispatch<React.SetStateAction<string>>
   setSelectedLevel: React.Dispatch<React.SetStateAction<string>>
 }
+
+export interface ButtonProps {
+  label: string
+  link: string
+}
