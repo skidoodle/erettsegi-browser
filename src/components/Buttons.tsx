@@ -29,12 +29,15 @@ const CustomButton: React.FC<ButtonProps> = ({ label, link }) => {
   }, [link])
 
   const getColor = (): ButtonColor => {
-    if (status === 200) {
-      return 'primary'
-    } else if (status === 404) {
-      return 'danger'
-    } else {
-      return 'default'
+    switch (true) {
+      case isLoading:
+        return 'default'
+      case status === 200:
+        return 'primary'
+      case status === 404:
+        return 'danger'
+      default:
+        return 'default'
     }
   }
 
@@ -50,7 +53,7 @@ const CustomButton: React.FC<ButtonProps> = ({ label, link }) => {
     <Button
       isDisabled={status !== 200 || !link || isLoading}
       isLoading={isLoading}
-      className='w-24 mt-3 text-sm font-bold py-2 px-2'
+      className='w-28 mt-3 text-sm font-bold py-2 px-2'
       color={getColor()}
       onClick={handleClick}
     >
