@@ -14,8 +14,11 @@ export default async function handler(
     return res.status(400).json({ error: `Hiányzó paraméter: ${MissingParam}` })
   }
 
-  const domain = link.split('/')[2]
-  if (domain !== 'dload-oktatas.educatio.hu') {
+  const secure = req.headers['x-forwarded-proto'] === 'https'
+  const protocol = secure ? 'https' : 'http'
+  const address = req.headers.host
+
+  if (!link.startsWith(`${protocol}://${address}`)) {
     return res.status(400).json({ error: 'Érvénytelen link' })
   }
 
@@ -24,6 +27,6 @@ export default async function handler(
     const status = response.status
     res.status(200).json({ status })
   } catch (error) {
-    res.status(500).json({ error: 'Hiányzó paraméterek:' })
+    res.status(500).json({ error: 'Internal Server Error' })
   }
 }

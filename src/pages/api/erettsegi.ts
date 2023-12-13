@@ -9,7 +9,14 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     szint: string
   }
 
+  const secure = req.headers['x-forwarded-proto'] === 'https'
+  const protocol = secure ? 'https' : 'http'
+  const address = req.headers.host
+
   const baseUrl = `https://dload-oktatas.educatio.hu/erettsegi/feladatok_${ev}${idoszak}_${szint}/`
+  const proxiedUrl = `${protocol}://${address}/api/proxy?link=${encodeURIComponent(
+    baseUrl
+  )}`
 
   const missingParams = []
   if (!ev) missingParams.push('ev')
@@ -68,13 +75,13 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     case 'infoism':
     case 'digkult':
       flZipUrl = `${baseUrl}${prefix}${forras}_${shortev}${honap}_${feladat}.zip`
-      flPdfUrl = `${baseUrl}${prefix}_${shortev}${honap}_${feladat}.pdf`
+      flPdfUrl = `${proxiedUrl}${prefix}_${shortev}${honap}_${feladat}.pdf`
       utZipUrl = `${baseUrl}${prefix}${megoldas}_${shortev}${honap}_${utmutato}.zip`
-      utPdfUrl = `${baseUrl}${prefix}_${shortev}${honap}_${utmutato}.pdf`
+      utPdfUrl = `${proxiedUrl}${prefix}_${shortev}${honap}_${utmutato}.pdf`
       break
     default:
-      flPdfUrl = `${baseUrl}${prefix}_${shortev}${honap}_${feladat}.pdf`
-      utPdfUrl = `${baseUrl}${prefix}_${shortev}${honap}_${utmutato}.pdf`
+      flPdfUrl = `${proxiedUrl}${prefix}_${shortev}${honap}_${feladat}.pdf`
+      utPdfUrl = `${proxiedUrl}${prefix}_${shortev}${honap}_${utmutato}.pdf`
       break
   }
 
