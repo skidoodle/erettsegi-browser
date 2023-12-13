@@ -21,16 +21,18 @@ export default async function handler(
 
   try {
     const response = await fetch(link, { method: 'GET' })
+    const contentType = response.headers.get('content-type')
 
-    if (response.headers.get('content-type') !== 'application/pdf') {
-      return res.status(400).json({ error: 'Érvénytelen link' })
+    if (contentType) {
+      const filename = link.split('/').pop() ?? 'download'
+      res.setHeader('Content-Disposition', `attachment; filename="${filename}"`)
+      res.setHeader('Content-Type', contentType)
     }
 
     if (response.ok) {
-      res.setHeader('Content-Type', 'application/pdf')
       const arrayBuffer: ArrayBuffer = await response.arrayBuffer()
-      const pdfBuffer: Buffer = Buffer.from(arrayBuffer)
-      res.send(pdfBuffer)
+      const buffer: Buffer = Buffer.from(arrayBuffer)
+      res.send(buffer)
     } else {
       res
         .status(response.status)
