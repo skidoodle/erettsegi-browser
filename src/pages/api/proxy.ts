@@ -22,11 +22,11 @@ export default async function handler(
   try {
     const response = await fetch(link, { method: 'GET' })
     const contentType = response.headers.get('content-type')
-
-    if (contentType) {
+    if (contentType == 'application/pdf') {
+      res.setHeader('Content-Type', contentType)
+    } else {
       const filename = link.split('/').pop() ?? 'download'
       res.setHeader('Content-Disposition', `attachment; filename="${filename}"`)
-      res.setHeader('Content-Type', contentType)
     }
 
     if (response.ok) {
