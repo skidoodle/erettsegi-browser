@@ -14,7 +14,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const address = req.headers.host
 
   const baseUrl = `https://dload-oktatas.educatio.hu/erettsegi/feladatok_${ev}${idoszak}_${szint}/`
-  const proxiedUrl = `${protocol}://${address}/api/proxy?link=${encodeURIComponent(
+  const proxiedUrl = `${protocol}://${address}/api/proxy?link=${encodeURI(
     baseUrl
   )}`
 
