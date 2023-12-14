@@ -15,6 +15,7 @@ export default async function handler(
   }
 
   try {
+    res.setHeader('Cache-Control', 's-maxage=31536000')
     const { protocol, host } = new URL(link)
     if (protocol && host) {
       const response = await fetch(link, { method: 'HEAD' })

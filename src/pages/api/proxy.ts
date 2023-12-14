@@ -20,6 +20,7 @@ export default async function handler(
   }
 
   try {
+    res.setHeader('Cache-Control', 's-maxage=31536000')
     const response = await fetch(link, { method: 'GET' })
     const contentType = response.headers.get('content-type')
     if (contentType == 'application/pdf') {

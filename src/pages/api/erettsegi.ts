@@ -85,5 +85,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       break
   }
 
+  res.setHeader('Cache-Control', 's-maxage=31536000')
   res.status(200).json({ flPdfUrl, utPdfUrl, flZipUrl, utZipUrl })
 }
