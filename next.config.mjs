@@ -1,3 +1,5 @@
+import million from 'million/compiler'
+
 const securityHeaders = [
   {
     key: 'X-DNS-Prefetch-Control',
@@ -33,7 +35,8 @@ const securityHeaders = [
   },
 ]
 
-module.exports = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   async headers() {
     return [
       {
@@ -43,5 +46,11 @@ module.exports = {
     ]
   },
   reactStrictMode: true,
-  poweredByHeader: false,
+  swcMinify: true,
 }
+
+const millionConfig = {
+  auto: true,
+}
+
+export default million.next(nextConfig, millionConfig)
