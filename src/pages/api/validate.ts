@@ -14,6 +14,11 @@ export default async function handler(
     return res.status(400).json({ error: `Hiányzó paraméter: ${missingParam}` })
   }
 
+  const domain = link.split('/')[2]
+  if (domain !== 'erettsegi.albert.lol') {
+    return res.status(400).json({ error: 'Érvénytelen link' })
+  }
+
   try {
     res.setHeader('Cache-Control', 's-maxage=31536000')
     const { protocol, host } = new URL(link)
