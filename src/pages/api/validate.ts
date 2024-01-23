@@ -5,13 +5,13 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const { link } = req.query as { link: string }
-  let MissingParam: string | null = null
+  let missingParam: string | null = null
   if (!link) {
-    MissingParam = 'link'
+    missingParam = 'link'
   }
 
-  if (MissingParam) {
-    return res.status(400).json({ error: `Hiányzó paraméter: ${MissingParam}` })
+  if (missingParam) {
+    return res.status(400).json({ error: `Hiányzó paraméter: ${missingParam}` })
   }
 
   try {

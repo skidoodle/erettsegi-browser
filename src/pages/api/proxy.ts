@@ -23,11 +23,11 @@ export default async function handler(
     res.setHeader('Cache-Control', 's-maxage=31536000')
     const response = await fetch(link, { method: 'GET' })
     const contentType = response.headers.get('content-type')
+
     if (contentType == 'application/pdf') {
+      const filename = link.split('/').pop() ?? 'document.pdf'
       res.setHeader('Content-Type', contentType)
-    } else {
-      const filename = link.split('/').pop() ?? 'download'
-      res.setHeader('Content-Disposition', `attachment; filename="${filename}"`)
+      res.setHeader('Content-Disposition', `inline; filename="${filename}"`)
     }
 
     if (response.ok) {
