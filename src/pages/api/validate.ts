@@ -6,6 +6,7 @@ export default async function handler(
 ) {
   const { link } = req.query as { link: string }
   let missingParam: string | null = null
+
   if (!link) {
     missingParam = 'link'
   }
@@ -15,20 +16,26 @@ export default async function handler(
   }
 
   const domain = link.split('/')[2]
-  if (domain !== 'erettsegi.albert.lol') {
+  if (domain !== 'localhost:3000' && domain !== 'erettsegi.albert.lol') {
     return res.status(400).json({ error: 'Érvénytelen link' })
   }
 
   try {
-    res.setHeader('Cache-Control', 's-maxage=31536000')
     const { protocol, host } = new URL(link)
-    if (protocol && host) {
-      const response = await fetch(link, { method: 'HEAD' })
-      const status = response.status
-      res.status(200).json({ status })
-    } else {
+    if (!protocol || !host) {
       return res.status(400).json({ error: 'Érvénytelen link' })
     }
+
+    const response = await fetch(link, { method: 'OPTIONS' })
+
+    if (!response.ok) {
+      return res
+        .status(400)
+        .json({ error: 'Invalid host or network unreachable' })
+    }
+
+    const status = response.status
+    res.status(200).json({ status })
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' })
   }
