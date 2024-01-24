@@ -1,11 +1,32 @@
 import { Footer } from '@/components/Footer'
 import { Button } from '@nextui-org/button'
-import Link from 'next/link'
 import type { GetServerSideProps, GetServerSidePropsContext } from 'next'
 
 interface ErrorProps {
   statusCode: number
 }
+
+const NotFound: React.FC = () => (
+  <>
+    <p className='mt-2'>Az keresett oldal nem található.</p>
+    <p className='mt-8 text-center'>
+      <Button color='primary' onPress={() => (window.location.href = '/')}>
+        Vissza
+      </Button>
+    </p>
+  </>
+)
+
+const Unexpected: React.FC = () => (
+  <>
+    <p className='mt-2'>Váratlan hiba történt.</p>
+    <p className='mt-8 text-center'>
+      <Button color='primary' onPress={() => (window.location.href = '/')}>
+        Vissza
+      </Button>
+    </p>
+  </>
+)
 
 const ErrorPage: React.FC<ErrorProps> = ({ statusCode }) => {
   return (
@@ -19,25 +40,14 @@ const ErrorPage: React.FC<ErrorProps> = ({ statusCode }) => {
             <div className='flex flex-col items-center justify-center'>
               <div className='mt-5 mb-3'>
                 <div className='text-2xl font-semibold text-gray-600'>
-                  {statusCode == 404 ? (
-                    <>
-                      <p className='mt-2'>Az keresett oldal nem található.</p>
-                      <p className='mt-8 text-center'>
-                        <Button color='primary'>
-                          <Link href='/'>{'Vissza'}</Link>
-                        </Button>
-                      </p>
-                    </>
-                  ) : (
-                    <>
-                      <p className='mt-2'>Váratlan hiba történt.</p>
-                      <p className='mt-8 text-center'>
-                        <Button color='primary'>
-                          <Link href='/'>{'Vissza'}</Link>
-                        </Button>
-                      </p>
-                    </>
-                  )}
+                  {(() => {
+                    switch (statusCode) {
+                      case 404:
+                        return <NotFound />
+                      default:
+                        return <Unexpected />
+                    }
+                  })()}
                 </div>
               </div>
             </div>
