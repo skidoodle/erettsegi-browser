@@ -11,7 +11,7 @@ const ErrorPage: React.FC<ErrorProps> = ({ statusCode }) => {
   return (
     <>
       <main className='dark:bg-[#121212] text-foreground bg-background py-5'>
-        <h1 className='text-7xl font-bold text-blue-400 text-center mt-16'>
+        <h1 className='text-7xl font-bold text-[#4f81fe] text-center mt-16'>
           {statusCode}
         </h1>
         <div className='flex min-h-screen flex-col items-center justify-between'>
