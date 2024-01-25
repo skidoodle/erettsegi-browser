@@ -16,7 +16,11 @@ export default async function handler(
   }
 
   const domain = link.split('/')[2]
-  if (domain !== 'localhost:3000' && domain !== 'erettsegi.albert.lol') {
+  if (
+    domain !== 'localhost:3000' &&
+    domain !== 'erettsegi.albert.lol' &&
+    domain !== 'dload-oktatas.educatio.hu'
+  ) {
     return res.status(400).json({ error: 'Érvénytelen link' })
   }
 
@@ -26,7 +30,7 @@ export default async function handler(
       return res.status(400).json({ error: 'Érvénytelen link' })
     }
 
-    const response = await fetch(link, { method: 'OPTIONS' })
+    const response = await fetch(link, { method: 'HEAD' })
 
     if (!response.ok) {
       return res
@@ -37,6 +41,6 @@ export default async function handler(
     const status = response.status
     res.status(200).json({ status })
   } catch (error) {
-    res.status(500).json({ error: 'Internal Server Error' })
+    res.status(500).json({ error: 'Internal Server Error', message: error })
   }
 }

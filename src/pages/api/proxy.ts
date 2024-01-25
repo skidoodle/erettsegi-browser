@@ -40,7 +40,6 @@ export default async function handler(
         .json({ error: 'Hiba történt a lekérés során.' })
     }
   } catch (error) {
-    console.error(error)
-    res.status(500).json({ error: 'Internal Server Error' })
+    res.status(500).json({ error: 'Internal Server Error', message: error })
   }
 }
