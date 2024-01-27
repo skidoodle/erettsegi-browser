@@ -32,12 +32,6 @@ export default async function handler(
 
     const response = await fetch(link, { method: 'HEAD' })
 
-    if (!response.ok) {
-      return res
-        .status(400)
-        .json({ error: 'Invalid host or network unreachable' })
-    }
-
     const status = response.status
     res.status(200).json({ status })
   } catch (error) {
