@@ -1,13 +1,13 @@
 import { Button } from '@nextui-org/react'
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import type { ButtonProps } from '@/utils/props'
 import type { ButtonColor } from '@/utils/types'
 
-const CustomButton: React.FC<ButtonProps> = ({ label, link }) => {
-  const [status, setStatus] = useState<number>(0)
+const CustomButton: React.FC<ButtonProps> = React.memo(({ label, link }) => {
+  const [status, setStatus] = useState<number>()
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
-  const checkLinkStatus = async (): Promise<void> => {
+  const checkLinkStatus = useCallback(async (): Promise<void> => {
     if (link) {
       try {
         setIsLoading(true)
@@ -20,13 +20,13 @@ const CustomButton: React.FC<ButtonProps> = ({ label, link }) => {
         setIsLoading(false)
       }
     }
-  }
+  }, [link])
 
   useEffect(() => {
     void checkLinkStatus()
-  }, [link])
+  }, [checkLinkStatus])
 
-  const getColor = (): ButtonColor => {
+  const getColor = useCallback((): ButtonColor => {
     switch (true) {
       case isLoading:
         return 'default'
@@ -37,15 +37,15 @@ const CustomButton: React.FC<ButtonProps> = ({ label, link }) => {
       default:
         return 'default'
     }
-  }
+  }, [isLoading, status])
 
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     if (status === 200 && link) {
       window.open(link)
     } else {
       console.error('A hivatkozás nem elérhető.')
     }
-  }
+  }, [status, link])
 
   return (
     <Button
@@ -58,12 +58,12 @@ const CustomButton: React.FC<ButtonProps> = ({ label, link }) => {
       {label}
     </Button>
   )
-}
+})
 
-export const PdfButton: React.FC<ButtonProps> = ({ label, link }) => (
-  <CustomButton label={label} link={link} />
+export const PdfButton: React.FC<ButtonProps> = React.memo(
+  ({ label, link }) => <CustomButton label={label} link={link} />
 )
 
-export const ZipButton: React.FC<ButtonProps> = ({ label, link }) => (
-  <CustomButton label={label} link={link} />
+export const ZipButton: React.FC<ButtonProps> = React.memo(
+  ({ label, link }) => <CustomButton label={label} link={link} />
 )
