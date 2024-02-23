@@ -16,6 +16,11 @@ export default function Document() {
           name='og:description'
           content='Egyszerű keresés és letöltés az érettségi feladatsorokhoz. 🏫'
         />
+        <script
+          defer
+          data-domain="erettsegi.albert.lol"
+          src="https://analytics.albert.lol/js/script.js"
+        />
         <link rel='icon' href='/favicon.ico' />
         <meta property='image' content='/logo.png' />
         <meta property='og:image' content='/logo.png' />
