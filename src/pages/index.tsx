@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { ButtonGroup, Divider } from '@nextui-org/react'
-import { PdfButton, ZipButton } from '@/components/Buttons'
+import { PdfButton, ZipButton, Mp3Button } from '@/components/Buttons'
 import { Footer } from '@/components/Footer'
 import { fetchData } from '@/utils/fetch'
 import useYears from '@/hooks/useYears'
@@ -23,6 +23,8 @@ export default function Home() {
     setflZipLink,
     utZipLink,
     setutZipLink,
+    flMp3Link,
+    setflMp3Link,
     selectedSubject,
     setSelectedSubject,
     selectedYear,
@@ -47,7 +49,8 @@ export default function Home() {
         setflZipLink,
         setutZipLink,
         setflPdfLink,
-        setutPdfLink
+        setutPdfLink,
+        setflMp3Link,
       )
     }
   }, [selectedLevel, selectedPeriod, selectedSubject, selectedYear])
@@ -100,6 +103,11 @@ export default function Home() {
                   <Divider orientation='vertical' />
                   <ZipButton label='Megoldás' link={utZipLink} />
                 </ButtonGroup>
+              </div>
+            )}
+            {['angol', 'nemet'].includes(selectedSubject) && (
+              <div className='space-x-3'>
+                <Mp3Button label='Hang' link={flMp3Link} />
               </div>
             )}
           </div>

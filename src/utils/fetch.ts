@@ -6,7 +6,8 @@ export const fetchData = async (
   setflZipLink: (link: string) => void,
   setutZipLink: (link: string) => void,
   setflPdfLink: (link: string) => void,
-  setutPdfLink: (link: string) => void
+  setutPdfLink: (link: string) => void,
+  setflMp3Link: (link: string) => void
 ) => {
   try {
     const url = `/api/erettsegi?vizsgatargy=${selectedSubject}&ev=${selectedYear}&idoszak=${selectedPeriod}&szint=${selectedLevel}`
@@ -19,6 +20,7 @@ export const fetchData = async (
         utZipUrl: string
         flPdfUrl: string
         utPdfUrl: string
+        flMp3Url: string
       }
 
       if (data.utZipUrl && data.flZipUrl) {
@@ -29,6 +31,10 @@ export const fetchData = async (
       if (data.utPdfUrl && data.flPdfUrl) {
         setflPdfLink(data.flPdfUrl)
         setutPdfLink(data.utPdfUrl)
+      }
+
+      if (data.flMp3Url) {
+        setflMp3Link(data.flMp3Url)
       }
     } else {
       console.error('Hiba történt az API hívás során.')

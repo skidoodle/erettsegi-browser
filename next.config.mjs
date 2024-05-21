@@ -1,5 +1,3 @@
-import million from 'million/compiler'
-
 const securityHeaders = [
   {
     key: 'X-DNS-Prefetch-Control',
@@ -49,8 +47,4 @@ const nextConfig = {
   swcMinify: true,
 }
 
-const millionConfig = {
-  auto: true,
-}
-
-export default million.next(nextConfig, millionConfig)
+export default nextConfig

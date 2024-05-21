@@ -67,3 +67,7 @@ export const PdfButton: React.FC<ButtonProps> = React.memo(
 export const ZipButton: React.FC<ButtonProps> = React.memo(
   ({ label, link }) => <CustomButton label={label} link={link} />
 )
+
+export const Mp3Button: React.FC<ButtonProps> = React.memo(
+  ({ label, link }) => <CustomButton label={label} link={link} />
+)
