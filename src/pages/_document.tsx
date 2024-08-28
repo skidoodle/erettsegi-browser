@@ -18,9 +18,9 @@ export default function Document() {
         />
         <script
           defer
-          data-domain="erettsegi.albert.lol"
-          src="https://analytics.albert.lol/js/script.js"
-        />
+          src="https://analytics.albert.lol/script.js"
+          data-website-id="8a11fd27-143a-4de1-9342-f938ca38df0c">
+        </script>
         <link rel='icon' href='/favicon.ico' />
         <meta property='image' content='/logo.png' />
         <meta property='og:image' content='/logo.png' />
