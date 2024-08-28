@@ -19,7 +19,7 @@ export default function Document() {
         <script
           defer
           src="https://analytics.albert.lol/script.js"
-          data-website-id="8a11fd27-143a-4de1-9342-f938ca38df0c">
+          data-website-id="7b196f47-39c9-4b8e-8dfd-b6e707282eea">
         </script>
         <link rel='icon' href='/favicon.ico' />
         <meta property='image' content='/logo.png' />
