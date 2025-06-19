@@ -1,4 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import { Agent, fetch } from "undici";
+
+const insecureAgent = new Agent({
+	connect: {
+		rejectUnauthorized: false,
+	},
+});
 
 export default async function handler(
 	req: NextApiRequest,
@@ -32,7 +39,10 @@ export default async function handler(
 			return res.status(400).json({ error: "Érvénytelen link" });
 		}
 
-		const response = await fetch(link, { method: "HEAD" });
+		const response = await fetch(link, {
+			method: "HEAD",
+			dispatcher: insecureAgent,
+		});
 
 		const status = response.status;
 		res.status(200).json({ status });
