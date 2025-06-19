@@ -1,4 +1,4 @@
-# erettsegi-browser
+# Érettségi kereső
 
 - **Framework**: [Next.js](https://nextjs.org)
 - **Deployment**: Self-hosted
