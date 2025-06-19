@@ -1,17 +1,17 @@
 # erettsegi-browser
 
 - **Framework**: [Next.js](https://nextjs.org)
-- **Deployment**: [Vercel](https://vercel.com)
+- **Deployment**: Self-hosted
 - **Styling**: [Tailwind CSS](https://tailwindcss.com)
-- **UI library**: [NextUI](https://nextui.org)
+- **UI library**: [HeroUI](https://www.heroui.com/)
 
 ## Running Locally
 
 ```bash
 git clone https://github.com/skidoodle/erettsegi-browser
 cd erettsegi-browser
-pnpm install
-pnpm dev
+bun i
+bun dev
 ```
 
 ## License
