@@ -1,8 +1,8 @@
 export type ButtonColor =
-  | 'primary'
-  | 'danger'
-  | 'default'
-  | 'secondary'
-  | 'success'
-  | 'warning'
-  | undefined
+	| "primary"
+	| "danger"
+	| "default"
+	| "secondary"
+	| "success"
+	| "warning"
+	| undefined;
