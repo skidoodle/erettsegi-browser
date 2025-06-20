@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@heroui/button";
 import { VscGithubInverted } from "react-icons/vsc";
 

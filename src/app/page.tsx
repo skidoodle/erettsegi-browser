@@ -1,3 +1,5 @@
+"use client";
+
 import { ButtonGroup, Divider } from "@heroui/react";
 import { useEffect } from "react";
 import { Mp3Button, PdfButton, ZipButton } from "@/components/Buttons";

@@ -1,3 +1,5 @@
+"use client";
+
 import { Source } from "@/components/Source";
 import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 

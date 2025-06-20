@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import useYears from "@/hooks/useYears";
 

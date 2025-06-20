@@ -1,3 +1,5 @@
+"use client";
+
 import { Select, SelectItem } from "@heroui/react";
 import type { SelectorProps } from "@/utils/props";
 import type { ChangeEvent } from "react";

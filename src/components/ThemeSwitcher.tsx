@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@heroui/button";
 import { useTheme } from "next-themes";
 import { VscColorMode } from "react-icons/vsc";

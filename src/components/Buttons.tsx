@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@heroui/react";
 import React, { useCallback, useEffect, useState } from "react";
 import type { ButtonProps } from "@/utils/props";
