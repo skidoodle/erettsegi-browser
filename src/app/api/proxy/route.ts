@@ -13,10 +13,15 @@ export async function GET(req: NextRequest) {
 		const link = searchParams.get("link");
 
 		if (!link) {
-			return NextResponse.json(
-				{ error: "Hiányzó paraméter: link" },
-				{ status: 400 },
-			);
+			return NextResponse.json({
+				parameters: {
+					link: {
+						type: "string",
+						required: true,
+					},
+				},
+				example: `/api/proxy?link=https://dload-oktatas.educatio.hu/erettsegi/feladatok_2023tavasz_kozep/k_mat_23maj_fl.pdf`,
+			});
 		}
 
 		let url: URL;
@@ -48,8 +53,9 @@ export async function GET(req: NextRequest) {
 		const body = await externalResponse.arrayBuffer();
 
 		const contentType = externalResponse.headers.get("content-type");
-		const headers = new Headers();
-		headers.set("Cache-Control", "s-maxage=31536000, stale-while-revalidate");
+		const headers = new Headers({
+			"Cache-Control": "s-maxage=31536000, stale-while-revalidate",
+		});
 
 		if (contentType) {
 			headers.set("Content-Type", contentType);
@@ -61,18 +67,14 @@ export async function GET(req: NextRequest) {
 
 		return new Response(body, {
 			status: 200,
-			headers: headers,
+			headers,
 		});
 	} catch (e: unknown) {
 		console.error("Proxy Error:", e);
-		if (e instanceof Error) {
-			return NextResponse.json(
-				{ error: "Internal Server Error", message: e.message },
-				{ status: 500 },
-			);
-		}
+		const errorMessage =
+			e instanceof Error ? e.message : "An unexpected internal error occurred";
 		return NextResponse.json(
-			{ error: "An unexpected internal error occurred" },
+			{ error: "Internal Server Error", message: errorMessage },
 			{ status: 500 },
 		);
 	}

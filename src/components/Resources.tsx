@@ -1,11 +1,16 @@
 "use client";
 
-import { Button } from "@heroui/react";
-import React, { useCallback, useEffect, useState } from "react";
-import type { ButtonProps } from "@/utils/props";
-import type { ButtonColor } from "@/utils/types";
+import { Button, type ButtonProps as HeroButtonProps } from "@heroui/react";
+import { useCallback, useEffect, useState, memo } from "react";
 
-const CustomButton: React.FC<ButtonProps> = React.memo(({ label, link }) => {
+export interface ResourceProps {
+	label: string;
+	link: string;
+}
+
+type ButtonColor = HeroButtonProps["color"];
+
+const ResourceComponent = ({ label, link }: ResourceProps) => {
 	const [status, setStatus] = useState<number>();
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -21,6 +26,8 @@ const CustomButton: React.FC<ButtonProps> = React.memo(({ label, link }) => {
 			} finally {
 				setIsLoading(false);
 			}
+		} else {
+			setStatus(undefined);
 		}
 	}, [link]);
 
@@ -29,16 +36,10 @@ const CustomButton: React.FC<ButtonProps> = React.memo(({ label, link }) => {
 	}, [checkLinkStatus]);
 
 	const getColor = useCallback((): ButtonColor => {
-		switch (true) {
-			case isLoading:
-				return "default";
-			case status === 200:
-				return "primary";
-			case status === 404:
-				return "danger";
-			default:
-				return "default";
-		}
+		if (isLoading) return "default";
+		if (status === 200) return "primary";
+		if (status === 404) return "danger";
+		return "default";
 	}, [isLoading, status]);
 
 	const handleClick = useCallback(() => {
@@ -60,16 +61,6 @@ const CustomButton: React.FC<ButtonProps> = React.memo(({ label, link }) => {
 			{label}
 		</Button>
 	);
-});
+};
 
-export const PdfButton: React.FC<ButtonProps> = React.memo(
-	({ label, link }) => <CustomButton label={label} link={link} />,
-);
-
-export const ZipButton: React.FC<ButtonProps> = React.memo(
-	({ label, link }) => <CustomButton label={label} link={link} />,
-);
-
-export const Mp3Button: React.FC<ButtonProps> = React.memo(
-	({ label, link }) => <CustomButton label={label} link={link} />,
-);
+export const Resource = memo(ResourceComponent);

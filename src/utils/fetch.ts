@@ -1,13 +1,18 @@
+import type { Dispatch } from "react";
+
+type Action =
+	| { type: "SET_FL_ZIP_LINK"; payload: string }
+	| { type: "SET_UT_ZIP_LINK"; payload: string }
+	| { type: "SET_FL_PDF_LINK"; payload: string }
+	| { type: "SET_UT_PDF_LINK"; payload: string }
+	| { type: "SET_FL_MP3_LINK"; payload: string };
+
 export const fetchData = async (
 	selectedSubject: string,
 	selectedYear: string,
 	selectedPeriod: string,
 	selectedLevel: string,
-	setflZipLink: (link: string) => void,
-	setutZipLink: (link: string) => void,
-	setflPdfLink: (link: string) => void,
-	setutPdfLink: (link: string) => void,
-	setflMp3Link: (link: string) => void,
+	dispatch: Dispatch<Action>,
 ) => {
 	try {
 		const url = `/api/erettsegi?vizsgatargy=${selectedSubject}&ev=${selectedYear}&idoszak=${selectedPeriod}&szint=${selectedLevel}`;
@@ -16,25 +21,25 @@ export const fetchData = async (
 
 		if (response.ok) {
 			const data = (await response.json()) as {
-				flZipUrl: string;
-				utZipUrl: string;
+				flZipUrl?: string;
+				utZipUrl?: string;
 				flPdfUrl: string;
 				utPdfUrl: string;
-				flMp3Url: string;
+				flMp3Url?: string;
 			};
 
 			if (data.utZipUrl && data.flZipUrl) {
-				setflZipLink(data.flZipUrl);
-				setutZipLink(data.utZipUrl);
+				dispatch({ type: "SET_FL_ZIP_LINK", payload: data.flZipUrl });
+				dispatch({ type: "SET_UT_ZIP_LINK", payload: data.utZipUrl });
 			}
 
 			if (data.utPdfUrl && data.flPdfUrl) {
-				setflPdfLink(data.flPdfUrl);
-				setutPdfLink(data.utPdfUrl);
+				dispatch({ type: "SET_FL_PDF_LINK", payload: data.flPdfUrl });
+				dispatch({ type: "SET_UT_PDF_LINK", payload: data.utPdfUrl });
 			}
 
 			if (data.flMp3Url) {
-				setflMp3Link(data.flMp3Url);
+				dispatch({ type: "SET_FL_MP3_LINK", payload: data.flMp3Url });
 			}
 		} else {
 			console.error("Hiba történt az API hívás során.");

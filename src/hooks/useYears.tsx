@@ -2,9 +2,7 @@
 
 import { useEffect } from "react";
 
-export default function useYears(
-	setYears: React.Dispatch<React.SetStateAction<string[]>>,
-) {
+export default function useYears(setYears: (years: string[]) => void) {
 	useEffect(() => {
 		const currentYear = new Date().getFullYear();
 		const availableYears: string[] = [];

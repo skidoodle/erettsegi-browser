@@ -3,7 +3,7 @@
 import { Button } from "@heroui/button";
 import { VscGithubInverted } from "react-icons/vsc";
 
-export const Source = () => {
+export function Source() {
 	return (
 		<Button
 			aria-label="Source Code"
@@ -15,4 +15,4 @@ export const Source = () => {
 			<VscGithubInverted size={20} />
 		</Button>
 	);
-};
+}

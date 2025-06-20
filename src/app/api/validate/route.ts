@@ -19,10 +19,16 @@ export async function GET(req: NextRequest) {
 		const link = searchParams.get("link");
 
 		if (!link) {
-			return NextResponse.json(
-				{ error: "Hiányzó paraméter: link" },
-				{ status: 400 },
-			);
+			return NextResponse.json({
+				parameters: {
+					link: {
+						type: "string",
+						required: true,
+						allowed_hosts: ALLOWED_HOSTS,
+					},
+				},
+				example: `/api/validate?link=https://dload-oktatas.educatio.hu/erettsegi/feladatok_2023tavasz_kozep/k_mat_23maj_fl.pdf`,
+			});
 		}
 
 		let url: URL;
@@ -48,26 +54,13 @@ export async function GET(req: NextRequest) {
 	} catch (e: unknown) {
 		console.error("Validation Error:", e);
 
-		if (e instanceof Error) {
-			const cause = e.cause as { code?: unknown } | undefined;
-			return NextResponse.json(
-				{
-					error: "Internal Server Error",
-					message: e.message,
-					cause: cause?.code ? String(cause.code) : undefined,
-					stack: process.env.NODE_ENV === "development" ? e.stack : undefined,
-				},
-				{ status: 500 },
-			);
-		}
+		const errorResponse = {
+			error: "Internal Server Error",
+			message: e instanceof Error ? e.message : "An unexpected error occurred",
+			...(process.env.NODE_ENV === "development" &&
+				e instanceof Error && { stack: e.stack }),
+		};
 
-		return NextResponse.json(
-			{
-				error: "Internal Server Error",
-				message: "An unexpected error occurred",
-				details: String(e),
-			},
-			{ status: 500 },
-		);
+		return NextResponse.json(errorResponse, { status: 500 });
 	}
 }

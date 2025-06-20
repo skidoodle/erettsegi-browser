@@ -4,7 +4,7 @@ import { Button } from "@heroui/button";
 import { useTheme } from "next-themes";
 import { VscColorMode } from "react-icons/vsc";
 
-export const ThemeSwitcher = () => {
+export function ThemeSwitcher() {
 	const { theme, setTheme } = useTheme();
 
 	const toggle = () => {
@@ -20,4 +20,4 @@ export const ThemeSwitcher = () => {
 			)}
 		</Button>
 	);
-};
+}
