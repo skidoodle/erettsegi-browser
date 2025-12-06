@@ -18,7 +18,10 @@ const ResourceComponent = ({ label, link }: ResourceProps) => {
 		if (link) {
 			try {
 				setIsLoading(true);
-				const response = await fetch(`/api/validate?link=${encodeURI(link)}`);
+
+				const validateUrl = link.replace("/proxy/", "/validate/");
+
+				const response = await fetch(validateUrl);
 				const data = (await response.json()) as { status: number };
 				setStatus(data.status);
 			} catch {

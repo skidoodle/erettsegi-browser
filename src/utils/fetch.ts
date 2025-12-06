@@ -15,36 +15,31 @@ export const fetchData = async (
 	dispatch: Dispatch<Action>,
 ) => {
 	try {
-		const url = `/api/erettsegi?vizsgatargy=${selectedSubject}&ev=${selectedYear}&idoszak=${selectedPeriod}&szint=${selectedLevel}`;
+		const url = `/erettsegi/${selectedSubject}/${selectedYear}/${selectedPeriod}/${selectedLevel}`;
 
 		const response = await fetch(url);
+		const data = await response.json();
 
-		if (response.ok) {
-			const data = (await response.json()) as {
-				flZipUrl?: string;
-				utZipUrl?: string;
-				flPdfUrl: string;
-				utPdfUrl: string;
-				flMp3Url?: string;
-			};
+		if (response.ok && data.found) {
+			const links = data.links;
 
-			if (data.utZipUrl && data.flZipUrl) {
-				dispatch({ type: "SET_FL_ZIP_LINK", payload: data.flZipUrl });
-				dispatch({ type: "SET_UT_ZIP_LINK", payload: data.utZipUrl });
+			if (links.utZipUrl && links.flZipUrl) {
+				dispatch({ type: "SET_FL_ZIP_LINK", payload: links.flZipUrl });
+				dispatch({ type: "SET_UT_ZIP_LINK", payload: links.utZipUrl });
 			}
 
-			if (data.utPdfUrl && data.flPdfUrl) {
-				dispatch({ type: "SET_FL_PDF_LINK", payload: data.flPdfUrl });
-				dispatch({ type: "SET_UT_PDF_LINK", payload: data.utPdfUrl });
+			if (links.utPdfUrl && links.flPdfUrl) {
+				dispatch({ type: "SET_FL_PDF_LINK", payload: links.flPdfUrl });
+				dispatch({ type: "SET_UT_PDF_LINK", payload: links.utPdfUrl });
 			}
 
-			if (data.flMp3Url) {
-				dispatch({ type: "SET_FL_MP3_LINK", payload: data.flMp3Url });
+			if (links.flMp3Url) {
+				dispatch({ type: "SET_FL_MP3_LINK", payload: links.flMp3Url });
 			}
 		} else {
-			console.error("Hiba történt az API hívás során.");
+			console.log("Incomplete selection or not found:", data);
 		}
 	} catch (error) {
-		console.error("Hiba történt az API hívás során.", error);
+		console.error("API Error", error);
 	}
 };
