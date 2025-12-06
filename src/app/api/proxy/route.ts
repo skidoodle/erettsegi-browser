@@ -1,11 +1,4 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { Agent, fetch } from "undici";
-
-const insecureAgent = new Agent({
-	connect: {
-		rejectUnauthorized: false,
-	},
-});
 
 export async function GET(req: NextRequest) {
 	try {
@@ -40,7 +33,6 @@ export async function GET(req: NextRequest) {
 
 		const externalResponse = await fetch(link, {
 			method: "GET",
-			dispatcher: insecureAgent,
 		});
 
 		if (!externalResponse.ok) {
@@ -50,25 +42,20 @@ export async function GET(req: NextRequest) {
 			);
 		}
 
-		const body = await externalResponse.arrayBuffer();
+		const headers = new Headers(externalResponse.headers);
+		headers.set("Cache-Control", "s-maxage=31536000, stale-while-revalidate");
 
 		const contentType = externalResponse.headers.get("content-type");
-		const headers = new Headers({
-			"Cache-Control": "s-maxage=31536000, stale-while-revalidate",
-		});
-
-		if (contentType) {
-			headers.set("Content-Type", contentType);
-			if (contentType === "application/pdf") {
-				const filename = url.pathname.split("/").pop() ?? "document.pdf";
-				headers.set("Content-Disposition", `inline; filename="${filename}"`);
-			}
+		if (contentType === "application/pdf") {
+			const filename = url.pathname.split("/").pop() ?? "document.pdf";
+			headers.set("Content-Disposition", `inline; filename="${filename}"`);
 		}
 
-		return new Response(body, {
+		return new NextResponse(externalResponse.body, {
 			status: 200,
 			headers,
 		});
+
 	} catch (e: unknown) {
 		console.error("Proxy Error:", e);
 		const errorMessage =
