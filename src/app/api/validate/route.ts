@@ -34,7 +34,7 @@ export async function GET(req: NextRequest) {
 		let url: URL;
 		try {
 			url = new URL(link);
-		} catch (_error) {
+		} catch {
 			return NextResponse.json(
 				{ error: "Érvénytelen link formátum" },
 				{ status: 400 },

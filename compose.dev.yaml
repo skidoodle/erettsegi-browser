@@ -1,0 +1,6 @@
+services:
+  erettsegi-browser:
+    build: .
+    container_name: erettsegi-browser
+    ports:
+      - "3000:3000"

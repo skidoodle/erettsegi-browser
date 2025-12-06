@@ -21,7 +21,7 @@ const ResourceComponent = ({ label, link }: ResourceProps) => {
 				const response = await fetch(`/api/validate?link=${encodeURI(link)}`);
 				const data = (await response.json()) as { status: number };
 				setStatus(data.status);
-			} catch (_error) {
+			} catch {
 				setStatus(500);
 			} finally {
 				setIsLoading(false);

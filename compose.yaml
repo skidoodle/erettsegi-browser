@@ -1,0 +1,7 @@
+services:
+  erettsegi-browser:
+    image: ghcr.io/skidoodle/erettsegi-browser:main
+    container_name: erettsegi-browser
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
