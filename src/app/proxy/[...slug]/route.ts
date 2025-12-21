@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { parseSegments, getExternalUrl, type ResourceSlug } from "@/utils/edu";
+import { insecureAgent } from "@/utils/http-agent";
 
 export async function GET(
 	_req: NextRequest,
@@ -32,7 +33,10 @@ export async function GET(
 			);
 		}
 
-		const externalResponse = await fetch(targetUrl, { method: "GET" });
+		const externalResponse = await fetch(targetUrl, {
+			method: "GET",
+			dispatcher: insecureAgent,
+		} as RequestInit);
 
 		if (!externalResponse.ok) {
 			return NextResponse.json(

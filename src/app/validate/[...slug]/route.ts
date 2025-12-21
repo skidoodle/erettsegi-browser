@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { parseSegments, getExternalUrl, type ResourceSlug } from "@/utils/edu";
+import { insecureAgent } from "@/utils/http-agent";
 
 export async function GET(
 	_req: NextRequest,
@@ -10,7 +11,7 @@ export async function GET(
 		const { subject, year, period, level, resourceType } = parseSegments(slug);
 
 		if (!subject || !year || !period || !level || !resourceType) {
-			return NextResponse.json({ status: 400 });
+			return NextResponse.json({ status: 400 }, { status: 400 });
 		}
 
 		const targetUrl = getExternalUrl(
@@ -20,11 +21,14 @@ export async function GET(
 			level,
 			resourceType as ResourceSlug,
 		);
-		if (!targetUrl) return NextResponse.json({ status: 404 });
+		if (!targetUrl) return NextResponse.json({ status: 404 }, { status: 404 });
 
-		const res = await fetch(targetUrl, { method: "HEAD" });
-		return NextResponse.json({ status: res.status });
+		const res = await fetch(targetUrl, {
+			method: "HEAD",
+			dispatcher: insecureAgent,
+		} as RequestInit);
+		return NextResponse.json({ status: res.status }, { status: res.status });
 	} catch {
-		return NextResponse.json({ status: 500 });
+		return NextResponse.json({ status: 500 }, { status: 500 });
 	}
 }
