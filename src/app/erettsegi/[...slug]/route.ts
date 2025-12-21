@@ -8,7 +8,7 @@ const LABELS = {
 };
 
 export async function GET(
-	req: NextRequest,
+	_req: NextRequest,
 	{ params }: { params: Promise<{ slug: string[] }> },
 ) {
 	try {
@@ -20,11 +20,7 @@ export async function GET(
 		const isComplete = subject && year && period && level;
 
 		if (isComplete) {
-			const protocol =
-				req.headers.get("x-forwarded-proto") === "https" ? "https" : "http";
-			const host = req.headers.get("host");
-
-			const proxyBase = `${protocol}://${host}/proxy/${subject.slug}/${year}/${period}/${level}`;
+			const proxyBase = `/proxy/${subject.slug}/${year}/${period}/${level}`;
 			const makeLink = (type: string) => `${proxyBase}/${type}`;
 
 			return NextResponse.json({
