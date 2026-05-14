@@ -1,6 +1,6 @@
 "use client";
 
-import { ButtonGroup, Divider } from "@heroui/react";
+import { ButtonGroup, Separator } from "@heroui/react";
 import { useContext, useEffect, useCallback } from "react";
 import { Resource } from "@/components/Resources";
 import { Footer } from "@/components/Footer";
@@ -53,77 +53,68 @@ export default function Home() {
 	const yearItems = years.map((year) => ({ value: year, label: year }));
 
 	return (
-		<main className="dark:bg-[#121212] text-foreground bg-background py-5">
-			<h1 className="text-4xl font-bold text-blue-400 text-center mt-16">
+		<main className="text-foreground bg-[#121212] min-h-screen flex flex-col items-center py-10 px-4">
+			<h1 className="text-4xl font-bold text-blue-400 text-center mt-12 mb-10 tracking-tight">
 				Érettségi kereső
 			</h1>
-			<div className="flex min-h-screen flex-col items-center justify-between">
-				<div className="container mx-auto">
-					<div className="flex flex-col items-center justify-center">
-						<div className="mt-5 mb-3">
-							<Selector
-								label="Tárgy"
-								selectedValue={selectedSubject}
-								onSelectionChange={(subject) =>
-									dispatch({ type: "SET_SELECTED_SUBJECT", payload: subject })
-								}
-								items={subjectItems}
-							/>
+
+			<div className="w-full max-w-60 flex flex-col items-center gap-2.5">
+				<Selector
+					label="Tárgy"
+					selectedValue={selectedSubject}
+					onSelectionChange={(subject) =>
+						dispatch({ type: "SET_SELECTED_SUBJECT", payload: subject })
+					}
+					items={subjectItems}
+				/>
+				<Selector
+					label="Év"
+					selectedValue={selectedYear}
+					onSelectionChange={(year) =>
+						dispatch({ type: "SET_SELECTED_YEAR", payload: year })
+					}
+					items={yearItems}
+				/>
+				<Selector
+					label="Időszak"
+					selectedValue={selectedPeriod}
+					onSelectionChange={(period) =>
+						dispatch({ type: "SET_SELECTED_PERIOD", payload: period })
+					}
+					items={periodItems}
+				/>
+				<Selector
+					label="Szint"
+					selectedValue={selectedLevel}
+					onSelectionChange={(level) =>
+						dispatch({ type: "SET_SELECTED_LEVEL", payload: level })
+					}
+					items={levelItems}
+				/>
+
+				<div className="flex flex-col items-center gap-3 mt-4 w-full">
+					<ButtonGroup className="w-full">
+						<Resource label="Feladatlap" link={flPdfLink} />
+						<Separator orientation="vertical" className="bg-black/20 w-px" />
+						<Resource label="Útmutató" link={utPdfLink} />
+					</ButtonGroup>
+
+					{["inf", "infoism", "digkult"].includes(selectedSubject) && (
+						<ButtonGroup className="w-full">
+							<Resource label="Forrás" link={flZipLink} />
+							<Separator orientation="vertical" className="bg-black/20 w-px" />
+							<Resource label="Megoldás" link={utZipLink} />
+						</ButtonGroup>
+					)}
+
+					{["angol", "nemet"].includes(selectedSubject) && flMp3Link && (
+						<div className="w-full flex justify-center">
+							<Resource label="Hang" link={flMp3Link} />
 						</div>
-						<div className="mb-3">
-							<Selector
-								label="Év"
-								selectedValue={selectedYear}
-								onSelectionChange={(year) =>
-									dispatch({ type: "SET_SELECTED_YEAR", payload: year })
-								}
-								items={yearItems}
-							/>
-						</div>
-						<div className="mb-3">
-							<Selector
-								label="Időszak"
-								selectedValue={selectedPeriod}
-								onSelectionChange={(period) =>
-									dispatch({ type: "SET_SELECTED_PERIOD", payload: period })
-								}
-								items={periodItems}
-							/>
-						</div>
-						<div className="mb-3">
-							<Selector
-								label="Szint"
-								selectedValue={selectedLevel}
-								onSelectionChange={(level) =>
-									dispatch({ type: "SET_SELECTED_LEVEL", payload: level })
-								}
-								items={levelItems}
-							/>
-						</div>
-						<div className="space-x-3">
-							<ButtonGroup>
-								<Resource label="Feladatlap" link={flPdfLink} />
-								<Divider orientation="vertical" />
-								<Resource label="Útmutató" link={utPdfLink} />
-							</ButtonGroup>
-						</div>
-						{["inf", "infoism", "digkult"].includes(selectedSubject) && (
-							<div className="space-x-3">
-								<ButtonGroup>
-									<Resource label="Forrás" link={flZipLink} />
-									<Divider orientation="vertical" />
-									<Resource label="Megoldás" link={utZipLink} />
-								</ButtonGroup>
-							</div>
-						)}
-						{["angol", "nemet"].includes(selectedSubject) && (
-							<div className="space-x-3">
-								<Resource label="Hang" link={flMp3Link} />
-							</div>
-						)}
-					</div>
+					)}
 				</div>
 			</div>
+
 			<Footer />
 		</main>
 	);
