@@ -53,7 +53,7 @@ export default function Home() {
 	const yearItems = years.map((year) => ({ value: year, label: year }));
 
 	return (
-		<main className="text-foreground bg-[#121212] min-h-screen flex flex-col items-center py-10 px-4">
+		<main className="text-foreground bg-gray-50 dark:bg-[#121212] min-h-screen flex flex-col items-center py-10 px-4">
 			<h1 className="text-4xl font-bold text-blue-400 text-center mt-12 mb-10 tracking-tight">
 				Érettségi kereső
 			</h1>
@@ -95,14 +95,20 @@ export default function Home() {
 				<div className="flex flex-col items-center gap-3 mt-4 w-full">
 					<ButtonGroup className="w-full">
 						<Resource label="Feladatlap" link={flPdfLink} />
-						<Separator orientation="vertical" className="bg-black/20 w-px" />
+						<Separator
+							orientation="vertical"
+							className="bg-black/20 dark:bg-zinc-700/50 w-px"
+						/>
 						<Resource label="Útmutató" link={utPdfLink} />
 					</ButtonGroup>
 
 					{["inf", "infoism", "digkult"].includes(selectedSubject) && (
 						<ButtonGroup className="w-full">
 							<Resource label="Forrás" link={flZipLink} />
-							<Separator orientation="vertical" className="bg-black/20 w-px" />
+							<Separator
+								orientation="vertical"
+								className="bg-black/20 dark:bg-zinc-700/50 w-px"
+							/>
 							<Resource label="Megoldás" link={utZipLink} />
 						</ButtonGroup>
 					)}

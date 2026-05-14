@@ -1,8 +1,6 @@
 @import "tailwindcss";
 @import "@heroui/react/styles";
-
 @source "../../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}";
-
 @custom-variant dark (&:is(.dark *));
 
 @layer base {
@@ -11,13 +9,11 @@
 	::before,
 	::backdrop,
 	::file-selector-button {
-		border-color: var(--color-gray-200, currentcolor);
+		border-color: currentcolor;
 	}
 }
 
 body {
-	background-color: #121212;
-	color: white;
 	margin: 0;
 	height: 100%;
 	overflow: hidden;
